@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Drinder</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_login_screen">Drinder - Login screen</string>
+    <string name="hint_login">Enter Your Login</string>
+    <string name="hint_password">Enter Your Password</string>
+    <string name="btn_login">Log In</string>
+    <string name="btn_register">Registration</string>
 </resources>
