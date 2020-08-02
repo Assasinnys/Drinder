@@ -15,4 +15,9 @@
     <string name="btn_continue">Continue</string>
     <string name="title_registration">Drinder - Registration</string>
     <string name="title_user_details_edit">Drinder - Edit Your Information</string>
+    <string name="p4">And let\'s turn to main. I have already heard tht you are a great lover of %1$s.</string>
+    <string name="p3">Maybe you have one of the spindiferous names? You are a %1$s, yes?</string>
+    <string name="p2">At first glance I think that you are much younger, but your intelligence discloses you as %1$s years old person.</string>
+    <string name="p1">In front of screen I see a beatiful %1$s.</string>
+    <string name="edit_details_title">Let me guess who you are</string>
 </resources>
