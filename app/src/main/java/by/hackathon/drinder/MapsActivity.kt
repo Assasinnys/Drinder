@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import by.hackathon.drinder.api.ApiImplementation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,6 +19,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -43,8 +46,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
+     * This is where we can add markers or lines, add listeners or move the camera.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
@@ -52,21 +54,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Customise the styling of the base map using a JSON object defined
-        // in a raw resource file.
-
-        // Customise the styling of the base map using a JSON object defined
-        // in a raw resource file.
-        val success: Boolean = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json))
-
-        if (!success) {
-            Log.e("kj", "Style parsing failed.")
-        }
+        //preventing schools, universities and some other objects from being displayed
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json))
 
         updateLocationUI()
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        MainScope().launch { showDrinkers(DRINKER_ID) } //TODO: get real id
         getDeviceLocation()
         if(mLastKnownLocation != null) mMap.moveCamera(CameraUpdateFactory.newLatLng(
             LatLng(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)))
@@ -81,6 +73,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
     }
 
+    /**
+     * Hide/show button for getting location
+     */
     private fun updateLocationUI(){
         try {
             if (isPermissionGranted()) {
@@ -95,11 +90,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun getDeviceLocation() {
-        /*
-     * Get the best and most recent location of the device, which may be null in rare
-     * cases when a location is not available.
+    /**
+     *  Get the best and most recent location of the device, which may be null in rare
+     *  cases when a location is not available.
      */
+    private fun getDeviceLocation() {
         try {
             val locationResult: Task<Location> = mFusedLocationProviderClient.getLastLocation()
             locationResult.addOnCompleteListener(this) { p0 ->
@@ -121,7 +116,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    /**
+     * get list of drinkers from server and shows their location on map
+     */
+    private suspend fun showDrinkers(myId: String) {
+        val markers = ApiImplementation.findDrinkers(myId)
+        markers.forEach { marker ->
+            mMap.addMarker(MarkerOptions()
+                .position(LatLng(marker.lat.toDouble(), marker.lon.toDouble()))
+                .title("drinker number ${marker.id}"))
+        }
+    }
+
     companion object {
+        private const val DRINKER_ID = "112"
         private const val REQUEST_CODE = 12
     }
 }
