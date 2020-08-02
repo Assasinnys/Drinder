@@ -2,6 +2,7 @@ package by.hackathon.drinder.api
 
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.LoginInfo
+import by.hackathon.drinder.data.UserInfo
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -33,5 +34,15 @@ object ApiImplementation {
     suspend fun register(login: String, password: String): LoginInfo? {
         val response = service.register(login, password)
         return if (response.isSuccessful) response.body() else null
+    }
+
+    suspend fun getUserDetail(id: String): UserInfo? {
+        val response = service.getUserDetail(id)
+        return if (response.isSuccessful) response.body() else null
+    }
+
+    suspend fun postUserDetail(login: String, password: String, gender: String, age: Int, alcohol: String, userName: String): Boolean {
+        val response = service.postUserDetail(login, password, alcohol, gender, age, userName)
+        return response.isSuccessful
     }
 }

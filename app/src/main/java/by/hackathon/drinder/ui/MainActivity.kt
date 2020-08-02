@@ -6,6 +6,7 @@ import by.hackathon.drinder.R
 import by.hackathon.drinder.ui.authorization.LoginFragment
 import by.hackathon.drinder.ui.authorization.RegistrationFragment
 import by.hackathon.drinder.ui.detail.UserDetailEditFragment
+import by.hackathon.drinder.ui.detail.UserDetailFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -15,6 +16,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         supportFragmentManager.beginTransaction().apply {
             setCustomAnimations(R.animator.slide_right, R.animator.slide_left)
             replace(R.id.f_container, LoginFragment())
+            commit()
+        }
+    }
+
+    fun goToDetailShowFragment() {
+        supportFragmentManager.beginTransaction().apply {
+            setCustomAnimations(R.animator.slide_right, R.animator.slide_left, R.animator.slide_back_left, R.animator.slide_back_right)
+            replace(R.id.f_container, UserDetailFragment())
+            addToBackStack("detail")
             commit()
         }
     }

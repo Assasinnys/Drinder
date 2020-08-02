@@ -3,6 +3,7 @@ package by.hackathon.drinder.api
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.LoginInfo
 import by.hackathon.drinder.data.UserInfo
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -45,5 +46,5 @@ interface DrinderApi {
         @Query(value = GENDER) gender: String? = null,
         @Query(value = AGE) age: Int? = null,
         @Query(value = USERNAME) username: String? = null
-    ): Response<UserInfo>
+    ): Response<ResponseBody>
 }
