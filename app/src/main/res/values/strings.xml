@@ -5,5 +5,7 @@
     <string name="hint_login">Enter Your Login</string>
     <string name="hint_password">Enter Your Password</string>
     <string name="btn_login">Log In</string>
-    <string name="btn_register">Registration</string>
+    <string name="btn_registration">Registration</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="btn_register">Register</string>
 </resources>

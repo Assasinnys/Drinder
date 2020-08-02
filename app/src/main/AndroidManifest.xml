@@ -31,7 +31,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.AuthorizationActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/title_login_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
