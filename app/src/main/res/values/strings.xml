@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">Drinder</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_login_screen">Drinder - Login screen</string>
+    <string name="title_login_screen">Drinder - Login</string>
     <string name="hint_login">Enter Your Login</string>
     <string name="hint_password">Enter Your Password</string>
     <string name="btn_login">Log In</string>
     <string name="btn_registration">Registration</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="btn_register">Register</string>
+    <string name="hint_age">Your Age</string>
+    <string name="hint_gender">Your Gender</string>
+    <string name="hint_alcohol">Alcohol</string>
+    <string name="hint_name">Your Name</string>
+    <string name="btn_continue">Continue</string>
+    <string name="title_registration">Drinder - Registration</string>
+    <string name="title_user_details_edit">Drinder - Edit Your Information</string>
 </resources>
