@@ -8,6 +8,7 @@ import by.hackathon.drinder.R
 import by.hackathon.drinder.api.ApiImplementation
 import by.hackathon.drinder.util.mainActivity
 import by.hackathon.drinder.util.myApp
+import by.hackathon.drinder.util.myProfileActivity
 import kotlinx.android.synthetic.main.fragment_user_detail_show.*
 import kotlinx.coroutines.*
 
@@ -42,7 +43,7 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
 
     override fun onResume() {
         super.onResume()
-        mainActivity().setActionBarTitle(R.string.title_user_details_show)
+        myProfileActivity().setActionBarTitle(R.string.title_user_details_show)
     }
 
     override fun onDestroy() {

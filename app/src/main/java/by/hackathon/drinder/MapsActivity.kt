@@ -1,14 +1,18 @@
 package by.hackathon.drinder
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import by.hackathon.drinder.api.ApiImplementation
+import by.hackathon.drinder.ui.MyProfileActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,6 +23,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -38,9 +44,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_maps_activity, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.myProfile -> {
+                val intent = Intent(this, MyProfileActivity::class.java)
+                startActivity(intent)
+                false
+            }
+            R.id.sendMyLocation -> {
+                sendLocation(getId(), getLatLng())
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**
@@ -58,10 +84,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json))
 
         updateLocationUI()
-        MainScope().launch { showDrinkers(DRINKER_ID) } //TODO: get real id
+        MainScope().launch { showDrinkers(getId()) }
         getDeviceLocation()
-        if(mLastKnownLocation != null) mMap.moveCamera(CameraUpdateFactory.newLatLng(
-            LatLng(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)))
+        if(mLastKnownLocation != null) mMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLng()))
     }
 
     private fun isPermissionGranted(): Boolean =
@@ -128,8 +153,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private fun getId(): String = (application as App).userManager.loginInfo?.id?:"0"
+
+    private fun getLatLng() = LatLng(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)
+
+    private fun sendLocation(id: String, location: LatLng) {
+        val coroutineScope = CoroutineScope(Dispatchers.IO)
+        coroutineScope.launch {
+            try {
+                ApiImplementation.sendLocation(id, location.latitude, location.longitude)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            // refreshes markers. Uncomment if find way to delete existing markers
+            // MainScope().launch { showDrinkers(getId()) }
+        }
+    }
+
     companion object {
-        private const val DRINKER_ID = "112"
         private const val REQUEST_CODE = 12
     }
 }

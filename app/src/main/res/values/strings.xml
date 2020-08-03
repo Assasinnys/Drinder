@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Drinder</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_my_profile">Profile</string>
     <string name="title_login_screen">Drinder - Login</string>
     <string name="hint_login">Enter Your Login</string>
     <string name="hint_password">Enter Your Password</string>
@@ -21,4 +22,6 @@
     <string name="p2">At first glance I think that you are much younger, but your intelligence discloses you as %1$s years old person.</string>
     <string name="p1">In front of screen I see a beatiful %1$s.</string>
     <string name="edit_details_title">Let me guess who you are</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="share_location">Share location</string>
 </resources>
