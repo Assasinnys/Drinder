@@ -39,6 +39,11 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
         btn_continue.setOnClickListener {
             startActivity(Intent(context, MapsActivity::class.java))
         }
+
+        im1.setOnClickListener { myProfileActivity().goToUserDetailSettings() }
+        im2.setOnClickListener { myProfileActivity().goToUserDetailSettings() }
+        im3.setOnClickListener { myProfileActivity().goToUserDetailSettings() }
+        im4.setOnClickListener { myProfileActivity().goToUserDetailSettings() }
     }
 
     override fun onResume() {

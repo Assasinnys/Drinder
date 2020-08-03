@@ -9,6 +9,7 @@ import by.hackathon.drinder.R
 import by.hackathon.drinder.api.ApiImplementation
 import by.hackathon.drinder.util.mainActivity
 import by.hackathon.drinder.util.myApp
+import by.hackathon.drinder.util.myProfileActivity
 import kotlinx.android.synthetic.main.fragment_user_detail_edit.*
 import kotlinx.coroutines.*
 
@@ -29,7 +30,7 @@ class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
             coroutineScope.launch {
                 if (ApiImplementation.postUserDetail(login, pass, gender, age.toInt(), alcohol, name)) {
                     withContext(Dispatchers.Main) {
-                        mainActivity().goToDetailShowFragment()
+                        startActivity(Intent(context, MapsActivity::class.java))
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -42,7 +43,8 @@ class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
 
     override fun onResume() {
         super.onResume()
-        mainActivity().setActionBarTitle(R.string.title_user_details_edit)
+        activity?.actionBar?.title = getString(R.string.title_user_details_edit)
+        //mainActivity().setActionBarTitle(R.string.title_user_details_edit)
     }
 
     override fun onDestroy() {
