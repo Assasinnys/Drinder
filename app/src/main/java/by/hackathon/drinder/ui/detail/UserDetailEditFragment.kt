@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.MapsActivity
 import by.hackathon.drinder.R
 import by.hackathon.drinder.api.ApiImplementation
@@ -16,6 +17,7 @@ import kotlinx.coroutines.*
 class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val navController by lazy { findNavController() }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -30,7 +32,7 @@ class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
             coroutineScope.launch {
                 if (ApiImplementation.postUserDetail(login, pass, gender, age.toInt(), alcohol, name)) {
                     withContext(Dispatchers.Main) {
-                        startActivity(Intent(context, MapsActivity::class.java))
+                        navController.navigate(R.id.action_userDetailEditFragment_to_userDetailFragment)
                     }
                 } else {
                     withContext(Dispatchers.Main) {

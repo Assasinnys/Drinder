@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="by.hackathon.drinder.ui.authorization.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="by.hackathon.drinder.ui.authorization.RegistrationFragment"
+        android:label="RegistrationFragment" >
+        <action
+            android:id="@+id/action_registrationFragment_to_userDetailEditFragment"
+            app:destination="@id/userDetailEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailEditFragment"
+        android:name="by.hackathon.drinder.ui.detail.UserDetailEditFragment"
+        android:label="UserDetailEditFragment" >
+        <action
+            android:id="@+id/action_userDetailEditFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="by.hackathon.drinder.ui.detail.UserDetailFragment"
+        android:label="UserDetailFragment" >
+        <action
+            android:id="@+id/action_userDetailFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_userDetailFragment_to_userDetailEditFragment"
+            app:destination="@id/userDetailEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="by.hackathon.drinder.ui.map.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
+</navigation>

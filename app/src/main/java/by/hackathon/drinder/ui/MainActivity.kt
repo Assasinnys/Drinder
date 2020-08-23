@@ -7,20 +7,24 @@ import by.hackathon.drinder.ui.authorization.LoginFragment
 import by.hackathon.drinder.ui.authorization.RegistrationFragment
 import by.hackathon.drinder.ui.detail.UserDetailEditFragment
 import by.hackathon.drinder.ui.detail.UserDetailFragment
+import by.hackathon.drinder.util.isLocationPermissionGranted
+import by.hackathon.drinder.util.requestLocationPermission
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportFragmentManager.beginTransaction().apply {
+        if (!isLocationPermissionGranted()) requestLocationPermission()
+
+        /*supportFragmentManager.beginTransaction().apply {
             setCustomAnimations(R.animator.slide_right, R.animator.slide_left)
             replace(R.id.f_container, LoginFragment())
             commit()
-        }
+        }*/
     }
 
-    fun goToDetailShowFragment() {
+    /*fun goToDetailShowFragment() {
         supportFragmentManager.beginTransaction().apply {
             setCustomAnimations(R.animator.slide_right, R.animator.slide_left, R.animator.slide_back_left, R.animator.slide_back_right)
             replace(R.id.f_container, UserDetailFragment())
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             addToBackStack("edit")
             commit()
         }
-    }
+    }*/
 
     fun setActionBarTitle(resId: Int) {
         supportActionBar?.title = getString(resId)

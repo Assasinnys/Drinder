@@ -1,9 +1,8 @@
 package by.hackathon.drinder.ui.authorization
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import by.hackathon.drinder.MapsActivity
+import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
 import by.hackathon.drinder.api.ApiImplementation
 import by.hackathon.drinder.util.mainActivity
@@ -14,6 +13,7 @@ import kotlinx.coroutines.*
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val navController by lazy { findNavController() }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -23,17 +23,21 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             val pass = tl_password.editText?.text?.toString()
             val confPass = tl_confirm_password?.editText?.text?.toString()
 
-            if (!validateFields(login, pass, confPass)) return@setOnClickListener
+            /**
+             * '!!' used because this fields has been validated and can't be null.
+             * @author Dmitry for mentor Alena :P
+             */
+
+            if (!isValidFields(login, pass, confPass)) return@setOnClickListener
 
             coroutineScope.launch {
                 myApp().userManager.loginInfo = ApiImplementation.register(login!!, pass!!)
                 withContext(Dispatchers.Main) {
                     if (myApp().userManager.loginInfo?.id != null)
-                        mainActivity().goToUserDetailSettings()
+                        navController.navigate(R.id.action_registrationFragment_to_userDetailEditFragment)
                     else tl_login.error = "Registration error"
                 }
             }
-
         }
     }
 
@@ -47,7 +51,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         coroutineScope.cancel()
     }
 
-    private fun validateFields(login: String?, pass: String?, confPass: String?): Boolean {
+    private fun isValidFields(login: String?, pass: String?, confPass: String?): Boolean {
 
         if (login.isNullOrEmpty() || pass.isNullOrEmpty()) {
             if (login.isNullOrEmpty()) {

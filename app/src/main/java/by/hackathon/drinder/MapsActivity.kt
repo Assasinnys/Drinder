@@ -23,11 +23,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -38,7 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        while(!isPermissionGranted()) requestPermsision()
+        while(!isPermissionGranted()) requestPermission()
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -93,7 +93,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED
 
-    private fun requestPermsision() {
+    private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
     }
@@ -147,9 +147,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private suspend fun showDrinkers(myId: String) {
         val markers = ApiImplementation.findDrinkers(myId)
         markers.forEach { marker ->
-            mMap.addMarker(MarkerOptions()
+            val m = mMap.addMarker(MarkerOptions()
                 .position(LatLng(marker.lat.toDouble(), marker.lon.toDouble()))
                 .title("drinker number ${marker.id}"))
+            m.tag = marker.id
+        }
+        mMap.setOnMarkerClickListener {marker ->
+            Snackbar.make(findViewById(R.id.map), "marker: ${marker.tag}", Snackbar.LENGTH_SHORT)
+            true
         }
     }
 
