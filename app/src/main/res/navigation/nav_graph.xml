@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="by.hackathon.drinder.ui.authorization.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
@@ -17,26 +19,28 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="by.hackathon.drinder.ui.authorization.RegistrationFragment"
-        android:label="RegistrationFragment" >
+        android:label="RegistrationFragment"
+        tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_userDetailEditFragment"
-            app:destination="@id/userDetailEditFragment" />
+            app:destination="@id/userDetailEditFragment"
+            app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/userDetailEditFragment"
         android:name="by.hackathon.drinder.ui.detail.UserDetailEditFragment"
-        android:label="UserDetailEditFragment" >
+        android:label="UserDetailEditFragment"
+        tools:layout="@layout/fragment_user_detail_edit">
         <action
-            android:id="@+id/action_userDetailEditFragment_to_userDetailFragment"
-            app:destination="@id/userDetailFragment" />
+            android:id="@+id/action_userDetailEditFragment_to_mapFragment"
+            app:destination="@id/mapFragment"
+            app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/userDetailFragment"
         android:name="by.hackathon.drinder.ui.detail.UserDetailFragment"
-        android:label="UserDetailFragment" >
-        <action
-            android:id="@+id/action_userDetailFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+        android:label="UserDetailFragment"
+        tools:layout="@layout/fragment_user_detail_show">
         <action
             android:id="@+id/action_userDetailFragment_to_userDetailEditFragment"
             app:destination="@id/userDetailEditFragment" />
@@ -44,7 +48,8 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="by.hackathon.drinder.ui.map.MapFragment"
-        android:label="MapFragment" >
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_mapFragment_to_userDetailFragment"
             app:destination="@id/userDetailFragment" />

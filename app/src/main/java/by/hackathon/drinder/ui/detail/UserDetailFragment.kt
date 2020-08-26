@@ -38,10 +38,6 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
             p4.text = getString(R.string.p4, userInfo.alcohol)
         }
 
-        btn_continue.setOnClickListener {
-            navController.navigate(R.id.action_userDetailFragment_to_mapFragment)
-        }
-
         im1.setOnClickListener { navController.navigate(R.id.action_userDetailFragment_to_userDetailEditFragment) }
         im2.setOnClickListener { navController.navigate(R.id.action_userDetailFragment_to_userDetailEditFragment) }
         im3.setOnClickListener { navController.navigate(R.id.action_userDetailFragment_to_userDetailEditFragment) }

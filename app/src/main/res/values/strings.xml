@@ -13,7 +13,7 @@
     <string name="hint_gender">Your Gender</string>
     <string name="hint_alcohol">Alcohol</string>
     <string name="hint_name">Your Name</string>
-    <string name="btn_continue">Continue</string>
+    <string name="btn_save_text">Save</string>
     <string name="title_registration">Drinder - Registration</string>
     <string name="title_user_details_edit">Drinder - Edit Your Information</string>
     <string name="title_user_details_show">Drinder - Your Information</string>
