@@ -24,4 +24,13 @@
     <string name="edit_details_title">Let me guess who you are</string>
     <string name="edit_profile">Edit profile</string>
     <string name="share_location">Share location</string>
+
+
+    <!-- Error Text   -->
+    <string name="error_empty_field">Empty field</string>
+    <string name="error_age_positive">Age must be bigger that 0</string>
+    <string name="error_age_too_big">Sorry, but u are not a record holder</string>
+    <string name="error_save_data">Save data error</string>
+    <string name="error_gps_permission">You didn\'t give permission to access your location</string>
+
 </resources>

@@ -45,7 +45,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         if (!requireContext().isLocationPermissionGranted()) {
             Toast.makeText(
                 context,
-                "You didn't give permission to access your location",
+                R.string.error_gps_permission,
                 Toast.LENGTH_LONG
             ).show()
             return
@@ -107,12 +107,13 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
             locationResult.addOnCompleteListener() { p0 ->
                 if (p0.isSuccessful) {
                     // Set the map's camera position to the current location of the device.
-                    mLastKnownLocation = p0.result
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        LatLng(
-                        mLastKnownLocation!!.latitude,
-                        mLastKnownLocation!!.longitude
-                    ), 14F))
+                    mLastKnownLocation = p0.result?.also {
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            LatLng(
+                                it.latitude,
+                                it.longitude
+                            ), 14F))
+                    }
                 } else {
                     Log.d("kj", "Current location is null. Using defaults.")
                     Log.e("kj", "Exception: %s", p0.exception)
@@ -127,11 +128,14 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private suspend fun showDrinkers(myId: String) {
         val markers = ApiImplementation.findDrinkers(myId)
         markers.forEach { marker ->
-            val m = mMap.addMarker(
-                MarkerOptions()
-                .position(LatLng(marker.lat.toDouble(), marker.lon.toDouble()))
-                .title("drinker number ${marker.id}"))
-            m.tag = marker.id
+            if (marker.id != myId) {
+                val m = mMap.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(marker.lat.toDouble(), marker.lon.toDouble()))
+                        .title("drinker number ${marker.id}")
+                )
+                m.tag = marker.id
+            }
         }
     }
 
