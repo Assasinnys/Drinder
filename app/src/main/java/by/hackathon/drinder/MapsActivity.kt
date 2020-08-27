@@ -50,18 +50,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_maps_activity, menu)
+        menuInflater.inflate(R.menu.menu_map_fragment, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.myProfile -> {
+            R.id.my_profile -> {
                 val intent = Intent(this, MyProfileActivity::class.java)
                 startActivity(intent)
                 false
             }
-            R.id.sendMyLocation -> {
+            R.id.send_my_location -> {
                 sendLocation(getId(), getLatLng())
                 false
             }

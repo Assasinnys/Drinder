@@ -6,93 +6,109 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/tv_name_text"
+        style="@style/ProfileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/edit_details_title"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:text="@string/name_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/p1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/p1"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toBottomOf="@+id/im1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <ImageButton
-        android:id="@+id/im1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:srcCompat="@drawable/ic_edit" />
-
-    <TextView
-        android:id="@+id/p2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/p2"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toBottomOf="@+id/im2"
-        app:layout_constraintEnd_toStartOf="@+id/im2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/im1"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
-        android:id="@+id/im2"
+    <TextView
+        android:id="@+id/tv_age_text"
+        style="@style/ProfileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:text="@string/age_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im1"
-        app:srcCompat="@drawable/ic_edit" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_name_text"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_text"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/p3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/p3"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toBottomOf="@+id/im3"
-        app:layout_constraintEnd_toStartOf="@+id/im3"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageButton
-        android:id="@+id/im3"
+        android:id="@+id/tv_gender_text"
+        style="@style/ProfileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/gender_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/p2"
-        app:srcCompat="@drawable/ic_edit" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_age_text"
+        app:layout_constraintTop_toBottomOf="@+id/tv_age_text"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/p4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/p4"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toBottomOf="@+id/im4"
-        app:layout_constraintEnd_toStartOf="@+id/im4"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageButton
-        android:id="@+id/im4"
+        android:id="@+id/tv_alcohol_text"
+        style="@style/ProfileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/alcohol_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im3"
-        app:srcCompat="@drawable/ic_edit" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_gender_text"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gender_text"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/ProfileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_alcohol_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Dmitry" />
+
+    <TextView
+        android:id="@+id/tv_age"
+        style="@style/ProfileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="25" />
+
+    <TextView
+        android:id="@+id/tv_gender"
+        style="@style/ProfileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_age"
+        app:layout_constraintTop_toBottomOf="@+id/tv_age"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Male" />
+
+    <TextView
+        android:id="@+id/tv_alcohol"
+        style="@style/ProfileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_gender"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gender"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Tequila, Vine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

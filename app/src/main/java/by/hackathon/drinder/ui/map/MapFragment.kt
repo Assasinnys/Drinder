@@ -23,7 +23,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
-import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -37,7 +36,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -57,17 +55,17 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_maps_activity, menu)
+        inflater.inflate(R.menu.menu_map_fragment, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.myProfile -> {
+            R.id.my_profile -> {
                 navController.navigate(R.id.action_mapFragment_to_userDetailFragment)
                 false
             }
-            R.id.sendMyLocation -> {
+            R.id.send_my_location -> {
                 //TODO send location
                 false
             }

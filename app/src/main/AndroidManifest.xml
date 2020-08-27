@@ -41,10 +41,10 @@
         </activity>
 
         <activity android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"/>
+            android:label="@string/title_map_screen"/>
 
         <activity android:name=".ui.MyProfileActivity"
-            android:label="@string/title_activity_my_profile"/>
+            android:label="@string/title_profile_screen"/>
     </application>
 
 </manifest>

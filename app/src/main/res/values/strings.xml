@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Drinder</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_my_profile">Profile</string>
+
+    <!-- Screen Titles   -->
+    <string name="title_map_screen">Drinder - Map of drinkers</string>
+    <string name="title_profile_screen">Drinder - User Profile</string>
     <string name="title_login_screen">Drinder - Login</string>
+    <string name="title_registration">Drinder - Registration</string>
+    <string name="title_user_details_edit">Drinder - Edit Your Profile</string>
+    <string name="title_user_details_show">Drinder - Your Information</string>
+
     <string name="hint_login">Enter Your Login</string>
     <string name="hint_password">Enter Your Password</string>
     <string name="btn_login">Log In</string>
@@ -14,13 +20,11 @@
     <string name="hint_alcohol">Alcohol</string>
     <string name="hint_name">Your Name</string>
     <string name="btn_save_text">Save</string>
-    <string name="title_registration">Drinder - Registration</string>
-    <string name="title_user_details_edit">Drinder - Edit Your Information</string>
-    <string name="title_user_details_show">Drinder - Your Information</string>
-    <string name="p4">And let\'s turn to main. I have already heard tht you are a great lover of %1$s.</string>
-    <string name="p3">Maybe you have one of the spindiferous names? You are a %1$s, yes?</string>
-    <string name="p2">At first glance I think that you are much younger, but your intelligence discloses you as %1$s years old person.</string>
-    <string name="p1">In front of screen I see a beatiful %1$s.</string>
+
+    <string name="name_text">Name:</string>
+    <string name="age_text">Age:</string>
+    <string name="gender_text">Gender:</string>
+    <string name="alcohol_text">Alcohol:</string>
     <string name="edit_details_title">Let me guess who you are</string>
     <string name="edit_profile">Edit profile</string>
     <string name="share_location">Share location</string>
