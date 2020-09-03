@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.AndroidViewModel
 import by.hackathon.drinder.App
-import by.hackathon.drinder.MapsActivity
 import by.hackathon.drinder.ui.MainActivity
 import by.hackathon.drinder.ui.MyProfileActivity
 
@@ -27,3 +27,5 @@ fun AppCompatActivity.requestLocationPermission() {
         this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 12
     )
 }
+
+fun AndroidViewModel.getApp(): App = getApplication() as App

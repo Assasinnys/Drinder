@@ -1,18 +1,15 @@
 package by.hackathon.drinder
 
-import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.LoginInfo
 import by.hackathon.drinder.data.UserInfo
 
-class UserManager(appContext: Context) {
+class UserManager() {
     var loginInfo: LoginInfo? = null
     var locationInfo: LocationInfo? = null
     var userInfo: UserInfo? = null
 
-    val preferences: SharedPreferences = appContext.getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+    /*val preferences: SharedPreferences = appContext.getSharedPreferences(PREF_NAME, MODE_PRIVATE)
 
     fun saveData() {
         preferences.edit().apply {
@@ -25,7 +22,7 @@ class UserManager(appContext: Context) {
             putString(NAME_KEY, userInfo?.username)
             apply()
         }
-    }
+    }*/
 
     companion object {
         const val PREF_NAME = "drinkers"
