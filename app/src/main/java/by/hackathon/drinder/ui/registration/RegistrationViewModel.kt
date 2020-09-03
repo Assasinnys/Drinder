@@ -3,8 +3,7 @@ package by.hackathon.drinder.ui.registration
 import android.app.Application
 import androidx.lifecycle.*
 import by.hackathon.drinder.data.repository.RegisterRepository
-import by.hackathon.drinder.ui.authorization.LoginViewModel
-import by.hackathon.drinder.util.getApp
+import by.hackathon.drinder.util.*
 import kotlinx.coroutines.launch
 
 /**
@@ -15,12 +14,12 @@ import kotlinx.coroutines.launch
 class RegistrationViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleObserver {
 
     private val registerNavigationPermission = MutableLiveData(false)
-    private val loginErrorField = MutableLiveData<Pair<String, Boolean>>(LoginViewModel.NO_ERROR)
-    private val passErrorField = MutableLiveData<Pair<String, Boolean>>(LoginViewModel.NO_ERROR)
+    private val loginErrorField = MutableLiveData<Int>(NO_ERROR)
+    private val passErrorField = MutableLiveData<Int>(NO_ERROR)
 
     val registerNavigationPermissionState: LiveData<Boolean> get() = registerNavigationPermission
-    val loginErrorFieldState: LiveData<Pair<String, Boolean>> get() = loginErrorField
-    val passErrorFieldState: LiveData<Pair<String, Boolean>> get() = passErrorField
+    val loginErrorFieldState: LiveData<Int> get() = loginErrorField
+    val passErrorFieldState: LiveData<Int> get() = passErrorField
 
     // DI
     private val userManager by lazy { getApp().userManager }
@@ -48,29 +47,23 @@ class RegistrationViewModel(app: Application) : AndroidViewModel(app), DefaultLi
         var isValid = true
 
         if (login.isNullOrEmpty()) {
-            loginErrorField.value = LoginViewModel.ERR_EMPTY_FIELD
+            loginErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            loginErrorField.value = LoginViewModel.NO_ERROR
+            loginErrorField.value = NO_ERROR
         }
 
         if (pass.isNullOrEmpty()) {
-            passErrorField.value = LoginViewModel.ERR_EMPTY_FIELD
+            passErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            passErrorField.value = LoginViewModel.NO_ERROR
+            passErrorField.value = NO_ERROR
         }
 
         if (pass != confPass) {
             passErrorField.value = ERR_PASS_NOT_EQ
             isValid = false
         }
-
         return isValid
-    }
-
-    companion object {
-        val ERR_PASS_NOT_EQ = "Passwords are not equals" to true
-        val ERR_REG = "Registration error" to true
     }
 }

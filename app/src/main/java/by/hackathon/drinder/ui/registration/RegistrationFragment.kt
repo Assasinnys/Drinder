@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
+import by.hackathon.drinder.util.setEditTextError
 import kotlinx.android.synthetic.main.fragment_registration.*
 
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
@@ -31,17 +32,11 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             registerNavigationPermissionState.observe(viewLifecycleOwner) {isGranted ->
                 if (isGranted) navController.navigate(R.id.action_registrationFragment_to_userDetailEditFragment)
             }
-            loginErrorFieldState.observe(viewLifecycleOwner) {
-                tl_login.apply {
-                    isErrorEnabled = it.second
-                    error = it.first
-                }
+            loginErrorFieldState.observe(viewLifecycleOwner) {code ->
+                setEditTextError(tl_login, code)
             }
-            passErrorFieldState.observe(viewLifecycleOwner) {
-                tl_password.apply {
-                    isErrorEnabled = it.second
-                    error = it.first
-                }
+            passErrorFieldState.observe(viewLifecycleOwner) {code ->
+                setEditTextError(tl_password, code)
             }
         }
     }

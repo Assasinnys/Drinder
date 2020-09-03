@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
+import by.hackathon.drinder.util.setEditTextError
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -32,17 +33,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            loginErrorFieldState.observe(viewLifecycleOwner) {
-                tl_login.apply {
-                    isErrorEnabled = it.second
-                    error = it.first
-                }
+            loginErrorFieldState.observe(viewLifecycleOwner) {code ->
+                setEditTextError(tl_login, code)
             }
-            passErrorFieldState.observe(viewLifecycleOwner) {
-                tl_password.apply {
-                    isErrorEnabled = it.second
-                    error = it.first
-                }
+            passErrorFieldState.observe(viewLifecycleOwner) {code ->
+                setEditTextError(tl_password, code)
             }
             loginNavigationPermissionState.observe(viewLifecycleOwner) { isGranted ->
                 if (isGranted) navController.navigate(R.id.action_loginFragment_to_mapFragment)
