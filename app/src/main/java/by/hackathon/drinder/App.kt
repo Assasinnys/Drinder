@@ -1,7 +1,7 @@
 package by.hackathon.drinder
 
 import android.app.Application
-import by.hackathon.drinder.data.Repository
+import by.hackathon.drinder.data.repository.Repository
 
 class App : Application() {
     lateinit var userManager: UserManager

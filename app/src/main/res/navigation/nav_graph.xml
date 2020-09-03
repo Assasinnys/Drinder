@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="by.hackathon.drinder.ui.authorization.RegistrationFragment"
+        android:name="by.hackathon.drinder.ui.registration.RegistrationFragment"
         android:label="@string/title_registration"
         tools:layout="@layout/fragment_registration">
         <action

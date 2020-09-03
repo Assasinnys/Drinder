@@ -2,9 +2,14 @@ package by.hackathon.drinder.ui.authorization
 
 import android.app.Application
 import androidx.lifecycle.*
-import by.hackathon.drinder.data.LoginRepository
+import by.hackathon.drinder.data.repository.LoginRepository
 import by.hackathon.drinder.util.getApp
 import kotlinx.coroutines.launch
+
+/**
+ * '!!' used because this fields has been validated and can't be null.
+ * @author Dmitry for mentor Alena :P
+ */
 
 class LoginViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleObserver {
 
