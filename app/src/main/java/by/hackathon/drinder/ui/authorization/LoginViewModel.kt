@@ -44,17 +44,23 @@ class LoginViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycle
     }
 
     private fun isValidFields(login: String?, pass: String?): Boolean {
-        if (login.isNullOrEmpty() || pass.isNullOrEmpty()) {
-            if (login.isNullOrEmpty())
-                loginErrorField.value = ERR_EMPTY_FIELD
-            else
-                passErrorField.value = ERR_EMPTY_FIELD
-            return false
+        var isValid = true
+
+        if (login.isNullOrEmpty()) {
+            loginErrorField.value = ERR_EMPTY_FIELD
+            isValid = false
         } else {
             loginErrorField.value = NO_ERROR
+        }
+
+        if (pass.isNullOrEmpty()) {
+            passErrorField.value = ERR_EMPTY_FIELD
+            isValid = false
+        } else {
             passErrorField.value = NO_ERROR
         }
-        return true
+
+        return isValid
     }
 
     companion object {
