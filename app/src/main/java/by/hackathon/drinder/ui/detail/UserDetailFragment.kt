@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
-import by.hackathon.drinder.api.ApiImplementation
-import by.hackathon.drinder.util.myApp
 import kotlinx.android.synthetic.main.fragment_user_detail_show.*
-import kotlinx.coroutines.*
 
 class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val viewModel: UserDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,39 +35,32 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val userInfo = myApp().userManager.userInfo
-        if (userInfo?.alcohol == null) {
-            coroutineScope.launch {
-                val userInfoD =
-                    ApiImplementation.getUserDetail(myApp().userManager.loginInfo?.id ?: "0")
-                myApp().userManager.userInfo = userInfoD
+        setupViewModelObservers()
+        lifecycle.addObserver(viewModel)
+    }
 
-                withContext(Dispatchers.Main) {
-                    userInfoD?.run {
-                        tv_name.text = username
-                        tv_age.text = age.toString()
-                        tv_gender.text = gender
-                        tv_alcohol.text = alcohol
-                    }
-                }
+    private fun setupViewModelObservers() {
+        viewModel.apply {
+            nameState.observe(viewLifecycleOwner) {
+                tv_name.text = it
             }
-        } else {
-            userInfo.run {
-                tv_name.text = username
-                tv_age.text = age.toString()
-                tv_gender.text = gender
-                tv_alcohol.text = alcohol
+            ageState.observe(viewLifecycleOwner) {
+                tv_age.text = it.toString()
+            }
+            genderState.observe(viewLifecycleOwner) {
+                tv_gender.text = it
+            }
+            alcoholState.observe(viewLifecycleOwner) {
+                tv_alcohol.text = it
+            }
+            connectionErrorState.observe(viewLifecycleOwner) { isError ->
+                if (isError)
+                    Toast.makeText(
+                        context,
+                        R.string.error_unable_receive_profile,
+                        Toast.LENGTH_LONG
+                    ).show()
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity?.actionBar?.title = getString(R.string.title_user_details_show)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        coroutineScope.cancel()
     }
 }
