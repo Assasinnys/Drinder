@@ -32,8 +32,11 @@
 
     <!-- Error Text   -->
     <string name="error_empty_field">Empty field</string>
+    <string name="error_user_not_exist">User does not exist</string>
+    <string name="error_reg">Registration error</string>
+    <string name="error_pass_not_eq">Passwords are not equals</string>
     <string name="error_age_positive">Age must be bigger that 0</string>
-    <string name="error_age_too_big">Sorry, but u are not a record holder</string>
+    <string name="error_age_too_high">Sorry, but u are not a record holder</string>
     <string name="error_save_data">Save data error</string>
     <string name="error_gps_permission">You didn\'t give permission to access your location</string>
     <string name="error_unable_receive_profile">Error due profile request. Check your internet connection and retry</string>
