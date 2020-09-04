@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="by.hackathon.drinder.ui.authorization.LoginFragment"
-        android:label="LoginFragment"
+        android:label="@string/title_login_screen"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
@@ -18,8 +18,8 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="by.hackathon.drinder.ui.authorization.RegistrationFragment"
-        android:label="RegistrationFragment"
+        android:name="by.hackathon.drinder.ui.registration.RegistrationFragment"
+        android:label="@string/title_registration"
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_userDetailEditFragment"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/userDetailEditFragment"
         android:name="by.hackathon.drinder.ui.detail.UserDetailEditFragment"
-        android:label="UserDetailEditFragment"
+        android:label="@string/title_user_details_edit"
         tools:layout="@layout/fragment_user_detail_edit">
         <action
             android:id="@+id/action_userDetailEditFragment_to_mapFragment"
@@ -39,7 +39,7 @@
     <fragment
         android:id="@+id/userDetailFragment"
         android:name="by.hackathon.drinder.ui.detail.UserDetailFragment"
-        android:label="UserDetailFragment"
+        android:label="@string/title_user_details_show"
         tools:layout="@layout/fragment_user_detail_show">
         <action
             android:id="@+id/action_userDetailFragment_to_userDetailEditFragment"
@@ -48,7 +48,7 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="by.hackathon.drinder.ui.map.MapFragment"
-        android:label="MapFragment"
+        android:label="@string/title_map_screen"
         tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_mapFragment_to_userDetailFragment"

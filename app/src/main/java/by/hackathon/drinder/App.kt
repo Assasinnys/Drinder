@@ -1,12 +1,15 @@
 package by.hackathon.drinder
 
 import android.app.Application
+import by.hackathon.drinder.data.repository.Repository
 
 class App : Application() {
     lateinit var userManager: UserManager
+    lateinit var repository: Repository
 
     override fun onCreate() {
         super.onCreate()
-        userManager = UserManager(applicationContext)
+        repository = Repository()
+        userManager = UserManager()
     }
 }

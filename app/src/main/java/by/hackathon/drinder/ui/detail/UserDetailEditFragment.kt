@@ -3,110 +3,67 @@ package by.hackathon.drinder.ui.detail
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
-import by.hackathon.drinder.api.ApiImplementation
-import by.hackathon.drinder.util.myApp
+import by.hackathon.drinder.util.setEditTextError
 import kotlinx.android.synthetic.main.fragment_user_detail_edit.*
-import kotlinx.coroutines.*
 
 class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val navController by lazy { findNavController() }
+    private val viewModel: UserDetailEditViewModel by viewModels()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initFields()
+        setupViewModelObservers()
+        lifecycle.addObserver(viewModel)
 
         btn_save.setOnClickListener {
             val age = tl_age.editText?.text?.toString()
             val gender = tl_gender.editText?.text?.toString()
             val alcohol = tl_alcohol.editText?.text?.toString()
             val name = tl_name.editText?.text?.toString()
-            val login = myApp().userManager.loginInfo?.login!!
-            val pass = myApp().userManager.loginInfo?.pass!!
 
-            if (isValidFields(age, alcohol, name)) {
-                coroutineScope.launch {
-                    if (ApiImplementation.postUserDetail(login, pass, gender ?: "", age!!.toInt(), alcohol!!, name!!)) {
-                        withContext(Dispatchers.Main) {
-                            navController.navigate(R.id.action_userDetailEditFragment_to_mapFragment)
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(context, R.string.error_save_data, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
+            viewModel.notifyEditInfoRequest(gender, age, alcohol, name)
         }
     }
 
-    private fun initFields() {
-        val userInfo = myApp().userManager.userInfo
-
-        userInfo?.let { info ->
-            tl_name.editText?.setText(info.username)
-            tl_alcohol.editText?.setText(info.alcohol)
-            tl_age.editText?.setText(info.age.toString())
-            tl_gender.editText?.setText(info.gender)
-        }
-    }
-
-    private fun isValidFields(age: String?, alcohol: String?, name: String?): Boolean {
-        when {
-            age.isNullOrEmpty() -> {
-                tl_age.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.error_empty_field)
-                }
-                return false
+    private fun setupViewModelObservers() {
+        viewModel.apply {
+            nameState.observe(viewLifecycleOwner) {
+                tl_name.editText?.setText(it)
             }
-            age.toInt() <= 0 -> {
-                tl_age.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.error_age_positive)
-                }
-                return false
+            ageState.observe(viewLifecycleOwner) {
+                tl_age.editText?.setText(it.toString())
             }
-            age.toInt() > 150 -> {
-                tl_age.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.error_age_too_big)
-                }
-                return false
+            genderState.observe(viewLifecycleOwner) {
+                tl_gender.editText?.setText(it)
             }
-            alcohol.isNullOrEmpty() -> {
-                tl_alcohol.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.error_empty_field)
-                }
-                return false
+            alcoholState.observe(viewLifecycleOwner) {
+                tl_alcohol.editText?.setText(it)
             }
-            name.isNullOrEmpty() -> {
-                tl_name.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.error_empty_field)
-                }
-                return false
+            nameErrorState.observe(viewLifecycleOwner) { code ->
+                setEditTextError(tl_name, code)
             }
-            else -> {
-                tl_age.isErrorEnabled = false
-                tl_alcohol.isErrorEnabled = false
-                tl_name.isErrorEnabled = false
-                return true
+            ageErrorState.observe(viewLifecycleOwner) { code ->
+                setEditTextError(tl_age, code)
+            }
+            alcoholErrorState.observe(viewLifecycleOwner) { code ->
+                setEditTextError(tl_alcohol, code)
+            }
+            connectionErrorState.observe(viewLifecycleOwner) { isError ->
+                if (isError)
+                    Toast.makeText(
+                        context,
+                        R.string.error_save_data,
+                        Toast.LENGTH_SHORT
+                    ).show()
+            }
+            saveNavigationPermissionState.observe(viewLifecycleOwner) { isGranted ->
+                if (isGranted) navController.navigate(R.id.action_userDetailEditFragment_to_mapFragment)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity?.actionBar?.title = getString(R.string.title_user_details_edit)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        coroutineScope.cancel()
     }
 }

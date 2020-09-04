@@ -1,4 +1,4 @@
-package by.hackathon.drinder.ui.authorization
+package by.hackathon.drinder.ui.registration
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,40 +7,36 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
 import by.hackathon.drinder.util.setEditTextError
-import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_registration.*
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private val navController by lazy { findNavController() }
-
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: RegistrationViewModel by viewModels()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupViewModelObservers()
         lifecycle.addObserver(viewModel)
 
-        btn_registration.setOnClickListener {
-            navController.navigate(R.id.action_loginFragment_to_registrationFragment)
-        }
-
-        btn_login.setOnClickListener {
+        btn_register.setOnClickListener {
             val login = tl_login.editText?.text?.toString()
             val pass = tl_password.editText?.text?.toString()
-            viewModel.notifyLoginRequest(login, pass)
+            val confPass = tl_confirm_password?.editText?.text?.toString()
+            viewModel.notifyRegistrationRequest(login, pass, confPass)
         }
     }
 
     private fun setupViewModelObservers() {
         viewModel.apply {
+            registerNavigationPermissionState.observe(viewLifecycleOwner) {isGranted ->
+                if (isGranted) navController.navigate(R.id.action_registrationFragment_to_userDetailEditFragment)
+            }
             loginErrorFieldState.observe(viewLifecycleOwner) {code ->
                 setEditTextError(tl_login, code)
             }
             passErrorFieldState.observe(viewLifecycleOwner) {code ->
                 setEditTextError(tl_password, code)
-            }
-            loginNavigationPermissionState.observe(viewLifecycleOwner) { isGranted ->
-                if (isGranted) navController.navigate(R.id.action_loginFragment_to_mapFragment)
             }
         }
     }

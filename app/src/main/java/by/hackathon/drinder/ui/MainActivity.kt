@@ -2,11 +2,9 @@ package by.hackathon.drinder.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import by.hackathon.drinder.R
-import by.hackathon.drinder.ui.authorization.LoginFragment
-import by.hackathon.drinder.ui.authorization.RegistrationFragment
-import by.hackathon.drinder.ui.detail.UserDetailEditFragment
-import by.hackathon.drinder.ui.detail.UserDetailFragment
 import by.hackathon.drinder.util.isLocationPermissionGranted
 import by.hackathon.drinder.util.requestLocationPermission
 
@@ -16,6 +14,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
 
         if (!isLocationPermissionGranted()) requestLocationPermission()
+
+        setupActionBarWithNavController(findNavController(R.id.nav_host_fragment))
 
         /*supportFragmentManager.beginTransaction().apply {
             setCustomAnimations(R.animator.slide_right, R.animator.slide_left)
@@ -53,5 +53,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     fun setActionBarTitle(resId: Int) {
         supportActionBar?.title = getString(resId)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp()
     }
 }
