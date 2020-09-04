@@ -30,7 +30,7 @@ interface DrinderApi {
         @Query(value = LONGITUDE) lon: String,
         @Query(value = ID) id: String,
         @Query(value = LATITUDE) lat: String
-    ): Response<LocationInfo>
+    ): Response<Void>
 
     @GET(FIND_ENDPOINT)
     suspend fun findDrinkers(@Query(value = ID) id: String): Response<List<LocationInfo>>

@@ -1,12 +1,13 @@
 package by.hackathon.drinder.data.repository
 
 import by.hackathon.drinder.api.ApiImplementation
+import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.LoginInfo
 import by.hackathon.drinder.data.UserInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class Repository : LoginRepository, RegisterRepository, UserDetailRepository {
+class Repository : LoginRepository, RegisterRepository, UserDetailRepository, MapRepository {
     override suspend fun login(login: String, pass: String): LoginInfo? {
         return withContext(Dispatchers.IO) {
             ApiImplementation.login(login, pass)
@@ -35,6 +36,18 @@ class Repository : LoginRepository, RegisterRepository, UserDetailRepository {
     ): Boolean {
         return withContext(Dispatchers.IO) {
             ApiImplementation.postUserDetail(login, password, gender, age, alcohol, userName)
+        }
+    }
+
+    override suspend fun findDrinkers(id: String): List<LocationInfo> {
+        return withContext(Dispatchers.IO) {
+            ApiImplementation.findDrinkers(id)
+        }
+    }
+
+    override suspend fun sendLocation(id: String, lat: Double, lon: Double): Boolean {
+        return withContext(Dispatchers.IO) {
+            ApiImplementation.sendLocation(id, lat, lon)
         }
     }
 }
