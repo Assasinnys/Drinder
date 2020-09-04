@@ -32,6 +32,10 @@ class LoginViewModel @Inject constructor(
 //    private val repository: LoginRepository by lazy { getApp().repository }
 
     override fun onStart(owner: LifecycleOwner) {
+        userManager.apply {
+            loginInfo = null
+            userInfo = null
+        }
         loginNavigationPermission.value = false
     }
 

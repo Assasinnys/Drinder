@@ -8,7 +8,9 @@ import by.hackathon.drinder.ui.map.MapFragment
 import by.hackathon.drinder.ui.registration.RegistrationFragment
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [ViewModelModule::class, RepositoryModule::class])
 interface AppComponent {
 

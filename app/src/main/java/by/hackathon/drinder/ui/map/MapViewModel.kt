@@ -22,7 +22,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
-class MapViewModel @Inject constructor(val userManager: UserManager, val repository: MapRepository, val appContext: Context) : ViewModel(), DefaultLifecycleObserver,
+class MapViewModel @Inject constructor(
+    val userManager: UserManager,
+    val repository: MapRepository,
+    val appContext: Context
+) : ViewModel(), DefaultLifecycleObserver,
     OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -33,7 +37,7 @@ class MapViewModel @Inject constructor(val userManager: UserManager, val reposit
     val gpsPermissionState: LiveData<Boolean> get() = isGpsPermissionGranted
 
     // DI
-//    private val userManager by lazy { getApp().userManager }
+//    private val userManager by lazy { app.userManager }
 //    private val repository: MapRepository by lazy { getApp().repository }
 
     override fun onCreate(owner: LifecycleOwner) {
