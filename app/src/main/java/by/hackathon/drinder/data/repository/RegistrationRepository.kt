@@ -2,6 +2,6 @@ package by.hackathon.drinder.data.repository
 
 import by.hackathon.drinder.data.LoginInfo
 
-interface RegisterRepository {
+interface RegistrationRepository {
     suspend fun register(login: String, password: String): LoginInfo?
 }

@@ -1,13 +1,21 @@
 package by.hackathon.drinder.ui.detail
 
-import android.app.Application
 import androidx.lifecycle.*
+import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.data.UserInfo
 import by.hackathon.drinder.data.repository.UserDetailRepository
-import by.hackathon.drinder.util.*
+import by.hackathon.drinder.util.ERR_AGE_TOO_HIGH
+import by.hackathon.drinder.util.ERR_AGE_ZERO
+import by.hackathon.drinder.util.ERR_EMPTY_FIELD
+import by.hackathon.drinder.util.NO_ERROR
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserDetailEditViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleObserver {
+@Suppress("MemberVisibilityCanBePrivate")
+class UserDetailEditViewModel @Inject constructor(
+    val userManager: UserManager,
+    val repository: UserDetailRepository
+) : ViewModel(), DefaultLifecycleObserver {
 
     private val nameData = MutableLiveData<String>()
     private val nameError = MutableLiveData<Int>(NO_ERROR)
@@ -30,8 +38,8 @@ class UserDetailEditViewModel(app: Application) : AndroidViewModel(app), Default
     val saveNavigationPermissionState: LiveData<Boolean> get() = saveNavigationPermission
 
     // DI
-    private val userManager by lazy { getApp().userManager }
-    private val repository: UserDetailRepository by lazy { getApp().repository }
+//    private val userManager by lazy { getApp().userManager }
+//    private val repository: UserDetailRepository by lazy { getApp().repository }
 
     override fun onStart(owner: LifecycleOwner) {
         connectionError.value = false

@@ -1,5 +1,6 @@
 package by.hackathon.drinder.ui.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,11 +11,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
+import by.hackathon.drinder.di.ViewModelFactory
+import by.hackathon.drinder.util.daggerAppComponent
 import kotlinx.android.synthetic.main.fragment_user_detail_show.*
+import javax.inject.Inject
 
 class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
 
-    private val viewModel: UserDetailViewModel by viewModels()
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: UserDetailViewModel by viewModels { viewModelFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        daggerAppComponent().inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

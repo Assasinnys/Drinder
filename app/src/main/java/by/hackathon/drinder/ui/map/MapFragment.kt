@@ -1,5 +1,6 @@
 package by.hackathon.drinder.ui.map
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,12 +11,23 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
+import by.hackathon.drinder.di.ViewModelFactory
+import by.hackathon.drinder.util.daggerAppComponent
 import com.google.android.gms.maps.SupportMapFragment
+import javax.inject.Inject
 
 class MapFragment : Fragment(R.layout.fragment_map) {
 
     private val navController by lazy { findNavController() }
-    private val viewModel: MapViewModel by viewModels()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: MapViewModel by viewModels { viewModelFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        daggerAppComponent().inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

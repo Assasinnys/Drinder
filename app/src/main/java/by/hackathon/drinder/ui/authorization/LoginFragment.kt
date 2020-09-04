@@ -1,19 +1,30 @@
 package by.hackathon.drinder.ui.authorization
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
+import by.hackathon.drinder.di.ViewModelFactory
+import by.hackathon.drinder.util.daggerAppComponent
 import by.hackathon.drinder.util.setEditTextError
 import kotlinx.android.synthetic.main.fragment_login.*
+import javax.inject.Inject
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: LoginViewModel by viewModels { viewModelFactory }
+
     private val navController by lazy { findNavController() }
 
-    private val viewModel: LoginViewModel by viewModels()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        daggerAppComponent().inject(this)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

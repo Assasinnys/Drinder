@@ -1,20 +1,23 @@
 package by.hackathon.drinder.ui.authorization
 
-import android.app.Application
 import androidx.lifecycle.*
+import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.data.repository.LoginRepository
 import by.hackathon.drinder.util.ERR_EMPTY_FIELD
 import by.hackathon.drinder.util.ERR_USER_NOT_EXIST
 import by.hackathon.drinder.util.NO_ERROR
-import by.hackathon.drinder.util.getApp
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * '!!' used because this fields has been validated and can't be null.
- * @author Dmitry for mentor Alena :P
  */
 
-class LoginViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleObserver {
+@Suppress("MemberVisibilityCanBePrivate")
+class LoginViewModel @Inject constructor(
+    val userManager: UserManager,
+    val repository: LoginRepository
+) : ViewModel(), DefaultLifecycleObserver {
 
     private val loginNavigationPermission = MutableLiveData(false)
     private val loginErrorField = MutableLiveData<Int>(NO_ERROR)
@@ -25,8 +28,8 @@ class LoginViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycle
     val passErrorFieldState: LiveData<Int> get() = passErrorField
 
     // DI
-    private val userManager by lazy { getApp().userManager }
-    private val repository: LoginRepository by lazy { getApp().repository }
+//    private val userManager by lazy { getApp().userManager }
+//    private val repository: LoginRepository by lazy { getApp().repository }
 
     override fun onStart(owner: LifecycleOwner) {
         loginNavigationPermission.value = false

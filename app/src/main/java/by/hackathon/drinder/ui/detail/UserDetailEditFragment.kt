@@ -1,5 +1,6 @@
 package by.hackathon.drinder.ui.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -7,13 +8,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
+import by.hackathon.drinder.di.ViewModelFactory
+import by.hackathon.drinder.util.daggerAppComponent
 import by.hackathon.drinder.util.setEditTextError
 import kotlinx.android.synthetic.main.fragment_user_detail_edit.*
+import javax.inject.Inject
 
 class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
 
     private val navController by lazy { findNavController() }
-    private val viewModel: UserDetailEditViewModel by viewModels()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: UserDetailEditViewModel by viewModels { viewModelFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        daggerAppComponent().inject(this)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

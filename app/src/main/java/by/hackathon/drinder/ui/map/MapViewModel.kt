@@ -1,13 +1,13 @@
 package by.hackathon.drinder.ui.map
 
-import android.app.Application
+import android.content.Context
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.*
 import by.hackathon.drinder.R
+import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.repository.MapRepository
-import by.hackathon.drinder.util.getApp
 import by.hackathon.drinder.util.isLocationPermissionGranted
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -19,8 +19,10 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MapViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleObserver,
+@Suppress("MemberVisibilityCanBePrivate")
+class MapViewModel @Inject constructor(val userManager: UserManager, val repository: MapRepository, val appContext: Context) : ViewModel(), DefaultLifecycleObserver,
     OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -31,12 +33,12 @@ class MapViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleOb
     val gpsPermissionState: LiveData<Boolean> get() = isGpsPermissionGranted
 
     // DI
-    private val userManager by lazy { getApp().userManager }
-    private val repository: MapRepository by lazy { getApp().repository }
+//    private val userManager by lazy { getApp().userManager }
+//    private val repository: MapRepository by lazy { getApp().repository }
 
     override fun onCreate(owner: LifecycleOwner) {
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApp())
-        if (getApp().isLocationPermissionGranted()) {
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appContext)
+        if (appContext.isLocationPermissionGranted()) {
             isGpsPermissionGranted.value = true
         }
     }
@@ -45,7 +47,7 @@ class MapViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleOb
         mMap = googleMap
         googleMap.setMapStyle(
             MapStyleOptions.loadRawResourceStyle(
-                getApplication(),
+                appContext,
                 R.raw.style_json
             )
         )

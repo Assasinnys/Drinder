@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.AndroidViewModel
 import by.hackathon.drinder.App
 import by.hackathon.drinder.R
 import com.google.android.material.textfield.TextInputLayout
@@ -59,4 +58,4 @@ fun TextInputLayout.applyError(errorText: String) {
     }
 }
 
-fun AndroidViewModel.getApp(): App = getApplication() as App
+fun Fragment.daggerAppComponent() = (requireActivity().application as App).appComponent

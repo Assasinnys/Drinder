@@ -1,13 +1,14 @@
 package by.hackathon.drinder.ui.detail
 
-import android.app.Application
 import androidx.lifecycle.*
+import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.data.UserInfo
 import by.hackathon.drinder.data.repository.UserDetailRepository
-import by.hackathon.drinder.util.getApp
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserDetailViewModel(app: Application) : AndroidViewModel(app), DefaultLifecycleObserver {
+@Suppress("MemberVisibilityCanBePrivate")
+class UserDetailViewModel @Inject constructor(val userManager: UserManager, val repository: UserDetailRepository) : ViewModel(), DefaultLifecycleObserver {
 
     private val nameData = MutableLiveData<String>()
     private val ageData = MutableLiveData<Int>()
@@ -22,12 +23,12 @@ class UserDetailViewModel(app: Application) : AndroidViewModel(app), DefaultLife
     val connectionErrorState: LiveData<Boolean> = connectionError
 
     // DI
-    private val userManager by lazy { getApp().userManager }
-    private val repository: UserDetailRepository by lazy { getApp().repository }
+//    private val userManager by lazy { getApp().userManager }
+//    private val repository: UserDetailRepository by lazy { getApp().repository }
 
     override fun onStart(owner: LifecycleOwner) {
         connectionError.value = false
-        val userInfo = getApp().userManager.userInfo
+        val userInfo = userManager.userInfo
         if (userInfo != null) {
             updateUI(userInfo)
         } else {
