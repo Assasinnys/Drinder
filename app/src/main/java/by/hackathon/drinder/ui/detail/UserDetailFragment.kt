@@ -12,6 +12,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
 import by.hackathon.drinder.di.ViewModelFactory
+import by.hackathon.drinder.util.USER_ID
 import by.hackathon.drinder.util.daggerAppComponent
 import kotlinx.android.synthetic.main.fragment_user_detail_show.*
 import javax.inject.Inject
@@ -29,7 +30,10 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        val userId = arguments?.getString(USER_ID)
+        if (userId != null) {
+            viewModel.notifyDifferentUserIdSent(userId)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -71,6 +75,13 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
                         R.string.error_unable_receive_profile,
                         Toast.LENGTH_LONG
                     ).show()
+            }
+            isUserDifferent.observe(viewLifecycleOwner) { isDifferent ->
+                if (isDifferent) {
+                    setHasOptionsMenu(false)
+                } else {
+                    setHasOptionsMenu(true)
+                }
             }
         }
     }

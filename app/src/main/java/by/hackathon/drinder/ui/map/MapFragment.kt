@@ -6,12 +6,15 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import by.hackathon.drinder.R
 import by.hackathon.drinder.di.ViewModelFactory
+import by.hackathon.drinder.util.DEFAULT_USER
+import by.hackathon.drinder.util.USER_ID
 import by.hackathon.drinder.util.daggerAppComponent
 import com.google.android.gms.maps.SupportMapFragment
 import javax.inject.Inject
@@ -50,6 +53,12 @@ class MapFragment : Fragment(R.layout.fragment_map) {
                 R.string.error_gps_permission,
                 Toast.LENGTH_LONG
             ).show()
+        }
+        viewModel.navigateToUserDetail.observe(viewLifecycleOwner) {
+            if (it != DEFAULT_USER) navController.navigate(
+                R.id.action_mapFragment_to_userDetailFragment,
+                bundleOf(USER_ID to it)
+            )
         }
     }
 

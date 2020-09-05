@@ -28,6 +28,7 @@
     <string name="edit_details_title">Let me guess who you are</string>
     <string name="edit_profile">Edit profile</string>
     <string name="share_location">Share location</string>
+    <string name="marker_drinker">Drinker number</string>
 
 
     <!-- Error Text   -->

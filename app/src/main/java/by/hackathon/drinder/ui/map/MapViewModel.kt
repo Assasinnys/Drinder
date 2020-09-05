@@ -8,6 +8,7 @@ import by.hackathon.drinder.R
 import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.repository.MapRepository
+import by.hackathon.drinder.util.DEFAULT_USER
 import by.hackathon.drinder.util.isLocationPermissionGranted
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -32,15 +33,22 @@ class MapViewModel @Inject constructor(
     private lateinit var mMap: GoogleMap
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private var mLastKnownLocation: Location? = null
+
     private val isGpsPermissionGranted = MutableLiveData(false)
+    private val _navigateToUserDetailPermission = MutableLiveData(DEFAULT_USER)
 
     val gpsPermissionState: LiveData<Boolean> get() = isGpsPermissionGranted
+    val navigateToUserDetail: LiveData<String> get() = _navigateToUserDetailPermission
 
     override fun onCreate(owner: LifecycleOwner) {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appContext)
         if (appContext.isLocationPermissionGranted()) {
             isGpsPermissionGranted.value = true
         }
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        _navigateToUserDetailPermission.value = DEFAULT_USER
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -69,10 +77,14 @@ class MapViewModel @Inject constructor(
                 val m = mMap.addMarker(
                     MarkerOptions()
                         .position(LatLng(marker.lat.toDouble(), marker.lon.toDouble()))
-                        .title("drinker number ${marker.id}")
+                        .title("${appContext.getString(R.string.marker_drinker)} ${marker.id}")
                 )
                 m.tag = marker.id
             }
+        }
+        mMap.setOnMarkerClickListener {
+            _navigateToUserDetailPermission.value = it.tag as String
+            true
         }
     }
 
