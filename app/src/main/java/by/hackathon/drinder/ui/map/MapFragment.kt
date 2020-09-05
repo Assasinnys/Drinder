@@ -38,8 +38,8 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupViewModelObservers()
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
+        val mapFragment = SupportMapFragment.newInstance()
+        childFragmentManager.beginTransaction().replace(R.id.map_container, mapFragment).commit()
         mapFragment.getMapAsync(viewModel)
     }
 
