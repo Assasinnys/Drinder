@@ -1,20 +1,39 @@
 package by.hackathon.drinder
 
-import by.hackathon.drinder.data.LocationInfo
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import by.hackathon.drinder.data.LoginInfo
 import by.hackathon.drinder.data.UserInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserManager @Inject constructor() {
+class UserManager @Inject constructor(appContext: Context) {
     var loginInfo: LoginInfo? = null
-    var locationInfo: LocationInfo? = null
     var userInfo: UserInfo? = null
 
-    /*val preferences: SharedPreferences = appContext.getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+    private val preferences: SharedPreferences = appContext.getSharedPreferences(PREF_NAME, MODE_PRIVATE)
 
-    fun saveData() {
+    fun saveLoginData() {
+        preferences.edit().apply {
+            putString(ID_KEY, loginInfo?.id)
+            putString(LOGIN_KEY, loginInfo?.login)
+            putString(PASS_KEY, loginInfo?.pass)
+            apply()
+        }
+    }
+
+    fun getPreviousLoginData(): Pair<String, String> {
+        return preferences.getString(LOGIN_KEY, "")!! to preferences.getString(PASS_KEY, "")!!
+    }
+
+    fun logout() {
+        loginInfo = null
+        userInfo = null
+    }
+
+    /*fun saveData() {
         preferences.edit().apply {
             putString(ID_KEY, loginInfo?.id)
             putString(LOGIN_KEY, loginInfo?.login)

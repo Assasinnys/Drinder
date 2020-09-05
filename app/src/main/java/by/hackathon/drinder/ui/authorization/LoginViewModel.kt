@@ -22,15 +22,21 @@ class LoginViewModel @Inject constructor(
     private val loginNavigationPermission = MutableLiveData(false)
     private val loginErrorField = MutableLiveData<Int>(NO_ERROR)
     private val passErrorField = MutableLiveData<Int>(NO_ERROR)
+    private val _login = MutableLiveData<String>()
+    private val _pass = MutableLiveData<String>()
 
     val loginNavigationPermissionState: LiveData<Boolean> get() = loginNavigationPermission
     val loginErrorFieldState: LiveData<Int> get() = loginErrorField
     val passErrorFieldState: LiveData<Int> get() = passErrorField
+    val login: LiveData<String> get() = _login
+    val pass: LiveData<String> get() = _pass
 
     override fun onStart(owner: LifecycleOwner) {
         userManager.apply {
-            loginInfo = null
-            userInfo = null
+            val previousLoginData = getPreviousLoginData()
+            _login.value = previousLoginData.first
+            _pass.value = previousLoginData.second
+            userManager.logout()
         }
         loginNavigationPermission.value = false
     }
@@ -42,6 +48,7 @@ class LoginViewModel @Inject constructor(
             val loginInfo = repository.login(login!!, pass!!)
             if (loginInfo != null) {
                 userManager.loginInfo = loginInfo
+                userManager.saveLoginData()
                 loginNavigationPermission.value = true
             } else {
                 loginErrorField.value = ERR_USER_NOT_EXIST

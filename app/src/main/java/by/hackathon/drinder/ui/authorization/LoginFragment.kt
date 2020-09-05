@@ -53,6 +53,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             loginNavigationPermissionState.observe(viewLifecycleOwner) { isGranted ->
                 if (isGranted) navController.navigate(R.id.action_loginFragment_to_mapFragment)
             }
+            login.observe(viewLifecycleOwner) {
+                tl_login.editText?.setText(it)
+            }
+            pass.observe(viewLifecycleOwner) {
+                tl_password.editText?.setText(it)
+            }
         }
     }
 }
