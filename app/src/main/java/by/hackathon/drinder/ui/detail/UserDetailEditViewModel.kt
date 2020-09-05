@@ -37,10 +37,6 @@ class UserDetailEditViewModel @Inject constructor(
     val connectionErrorState: LiveData<Boolean> get() = connectionError
     val saveNavigationPermissionState: LiveData<Boolean> get() = saveNavigationPermission
 
-    // DI
-//    private val userManager by lazy { getApp().userManager }
-//    private val repository: UserDetailRepository by lazy { getApp().repository }
-
     override fun onStart(owner: LifecycleOwner) {
         connectionError.value = false
         saveNavigationPermission.value = false

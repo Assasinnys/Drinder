@@ -7,7 +7,9 @@ import by.hackathon.drinder.data.UserInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class Repository @Inject constructor() : LoginRepository, RegistrationRepository, UserDetailRepository, MapRepository {
     override suspend fun login(login: String, pass: String): LoginInfo? {
         return withContext(Dispatchers.IO) {

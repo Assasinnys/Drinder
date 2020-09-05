@@ -27,10 +27,6 @@ class LoginViewModel @Inject constructor(
     val loginErrorFieldState: LiveData<Int> get() = loginErrorField
     val passErrorFieldState: LiveData<Int> get() = passErrorField
 
-    // DI
-//    private val userManager by lazy { getApp().userManager }
-//    private val repository: LoginRepository by lazy { getApp().repository }
-
     override fun onStart(owner: LifecycleOwner) {
         userManager.apply {
             loginInfo = null

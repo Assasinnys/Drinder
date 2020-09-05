@@ -36,10 +36,6 @@ class MapViewModel @Inject constructor(
 
     val gpsPermissionState: LiveData<Boolean> get() = isGpsPermissionGranted
 
-    // DI
-//    private val userManager by lazy { app.userManager }
-//    private val repository: MapRepository by lazy { getApp().repository }
-
     override fun onCreate(owner: LifecycleOwner) {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appContext)
         if (appContext.isLocationPermissionGranted()) {

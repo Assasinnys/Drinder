@@ -22,10 +22,6 @@ class UserDetailViewModel @Inject constructor(val userManager: UserManager, val 
     val alcoholState: LiveData<String> get() = alcoholData
     val connectionErrorState: LiveData<Boolean> = connectionError
 
-    // DI
-//    private val userManager by lazy { getApp().userManager }
-//    private val repository: UserDetailRepository by lazy { getApp().repository }
-
     override fun onStart(owner: LifecycleOwner) {
         connectionError.value = false
         val userInfo = userManager.userInfo
