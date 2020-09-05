@@ -7,7 +7,7 @@
     <string name="title_login_screen">Drinder - Login</string>
     <string name="title_registration">Drinder - Registration</string>
     <string name="title_user_details_edit">Drinder - Edit Your Profile</string>
-    <string name="title_user_details_show">Drinder - Your Information</string>
+    <string name="title_user_details_show">Drinder - Information</string>
 
     <string name="hint_login">Enter Your Login</string>
     <string name="hint_password">Enter Your Password</string>
