@@ -33,27 +33,10 @@ class UserManager @Inject constructor(appContext: Context) {
         userInfo = null
     }
 
-    /*fun saveData() {
-        preferences.edit().apply {
-            putString(ID_KEY, loginInfo?.id)
-            putString(LOGIN_KEY, loginInfo?.login)
-            putString(PASS_KEY, loginInfo?.pass)
-            putString(AGE_KEY, userInfo?.age?.toString())
-            putString(GENDER_KEY, userInfo?.gender)
-            putString(ALCOHOL_KEY, userInfo?.alcohol)
-            putString(NAME_KEY, userInfo?.username)
-            apply()
-        }
-    }*/
-
     companion object {
         const val PREF_NAME = "drinkers"
         const val ID_KEY = "id"
         const val LOGIN_KEY = "login"
         const val PASS_KEY = "pass"
-        const val AGE_KEY = "age"
-        const val GENDER_KEY = "gender"
-        const val ALCOHOL_KEY = "alcohol"
-        const val NAME_KEY = "username"
     }
 }
