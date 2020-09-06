@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
 class MapViewModel @Inject constructor(
-//    val userManager: UserManager,
     val repository: MapRepository,
     val appContext: Context
 ) : ViewModel(), DefaultLifecycleObserver,

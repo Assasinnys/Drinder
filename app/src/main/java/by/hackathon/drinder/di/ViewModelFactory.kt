@@ -8,7 +8,7 @@ import javax.inject.Provider
 @Suppress("MemberVisibilityCanBePrivate")
 class ViewModelFactory @Inject constructor(
     val providerMap: Map<Class<out ViewModel>,
-            @JvmSuppressWildcards Provider<ViewModel>>
+        @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

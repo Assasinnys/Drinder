@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
 class UserDetailViewModel @Inject constructor(
-//    val userManager: UserManager,
     val repository: UserDetailRepository
 ) : ViewModel(), DefaultLifecycleObserver {
 
