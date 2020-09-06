@@ -1,8 +1,6 @@
 package by.hackathon.drinder.ui.detail
 
 import androidx.lifecycle.*
-import by.hackathon.drinder.UserManager
-import by.hackathon.drinder.data.UserInfo
 import by.hackathon.drinder.data.repository.UserDetailRepository
 import by.hackathon.drinder.util.ERR_AGE_TOO_HIGH
 import by.hackathon.drinder.util.ERR_AGE_ZERO
@@ -13,33 +11,32 @@ import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
 class UserDetailEditViewModel @Inject constructor(
-    val userManager: UserManager,
     val repository: UserDetailRepository
 ) : ViewModel(), DefaultLifecycleObserver {
 
-    private val nameData = MutableLiveData<String>()
-    private val nameError = MutableLiveData<Int>(NO_ERROR)
-    private val ageData = MutableLiveData<Int>()
-    private val ageError = MutableLiveData<Int>(NO_ERROR)
-    private val genderData = MutableLiveData<String>()
-    private val alcoholData = MutableLiveData<String>()
-    private val alcoholError = MutableLiveData<Int>(NO_ERROR)
-    private val connectionError = MutableLiveData(false)
-    private val saveNavigationPermission = MutableLiveData(false)
+    private val _nameData = MutableLiveData<String>()
+    private val _nameError = MutableLiveData<Int>(NO_ERROR)
+    private val _ageData = MutableLiveData<Int>()
+    private val _ageError = MutableLiveData<Int>(NO_ERROR)
+    private val _genderData = MutableLiveData<String>()
+    private val _alcoholData = MutableLiveData<String>()
+    private val _alcoholError = MutableLiveData<Int>(NO_ERROR)
+    private val _connectionError = MutableLiveData(false)
+    private val _saveNavigationPermission = MutableLiveData(false)
 
-    val nameState: LiveData<String> get() = nameData
-    val nameErrorState: LiveData<Int> get() = nameError
-    val ageState: LiveData<Int> get() = ageData
-    val ageErrorState: LiveData<Int> get() = ageError
-    val genderState: LiveData<String> get() = genderData
-    val alcoholState: LiveData<String> get() = alcoholData
-    val alcoholErrorState: LiveData<Int> get() = alcoholError
-    val connectionErrorState: LiveData<Boolean> get() = connectionError
-    val saveNavigationPermissionState: LiveData<Boolean> get() = saveNavigationPermission
+    val nameData: LiveData<String> get() = _nameData
+    val nameError: LiveData<Int> get() = _nameError
+    val ageData: LiveData<Int> get() = _ageData
+    val ageError: LiveData<Int> get() = _ageError
+    val genderData: LiveData<String> get() = _genderData
+    val alcoholData: LiveData<String> get() = _alcoholData
+    val alcoholError: LiveData<Int> get() = _alcoholError
+    val connectionError: LiveData<Boolean> get() = _connectionError
+    val saveNavigationPermission: LiveData<Boolean> get() = _saveNavigationPermission
 
     override fun onStart(owner: LifecycleOwner) {
-        connectionError.value = false
-        saveNavigationPermission.value = false
+        _connectionError.value = false
+        _saveNavigationPermission.value = false
         updateUI()
     }
 
@@ -47,30 +44,26 @@ class UserDetailEditViewModel @Inject constructor(
         if (!isValidFields(age, alcohol, userName)) return
 
         viewModelScope.launch {
-            userManager.loginInfo?.let {
-                val isSuccess = repository.postUserDetail(
-                    it.login,
-                    it.pass,
-                    gender ?: "",
-                    age!!.toInt(),
-                    alcohol!!,
-                    userName!!
-                )
-                if (isSuccess) {
-                    userManager.userInfo = UserInfo(alcohol, gender, age.toInt(), userName)
-                    saveNavigationPermission.value = true
-                } else
-                    connectionError.value = true
-            }
+            val isSuccess = repository.postUserDetail(
+                gender ?: "",
+                age!!.toInt(),
+                alcohol!!,
+                userName!!
+            )
+            if (isSuccess) {
+                _saveNavigationPermission.value = true
+            } else
+                _connectionError.value = true
         }
     }
 
+
     private fun updateUI() {
-        userManager.userInfo?.let { info ->
-            nameData.value = info.username
-            ageData.value = info.age
-            genderData.value = info.gender
-            alcoholData.value = info.alcohol
+        repository.getSavedUserDetails()?.let { info ->
+            _nameData.value = info.username
+            _ageData.value = info.age
+            _genderData.value = info.gender
+            _alcoholData.value = info.alcohol
         }
     }
 
@@ -79,34 +72,34 @@ class UserDetailEditViewModel @Inject constructor(
 
         when {
             age.isNullOrEmpty() -> {
-                ageError.value = ERR_EMPTY_FIELD
+                _ageError.value = ERR_EMPTY_FIELD
                 isValid = false
             }
             age.toInt() <= 0 -> {
-                ageError.value = ERR_AGE_ZERO
+                _ageError.value = ERR_AGE_ZERO
                 isValid = false
             }
             age.toInt() > 150 -> {
-                ageError.value = ERR_AGE_TOO_HIGH
+                _ageError.value = ERR_AGE_TOO_HIGH
                 isValid = false
             }
             else -> {
-                ageError.value = NO_ERROR
+                _ageError.value = NO_ERROR
             }
         }
 
         if (alcohol.isNullOrEmpty()) {
-            alcoholError.value = ERR_EMPTY_FIELD
+            _alcoholError.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            alcoholError.value = NO_ERROR
+            _alcoholError.value = NO_ERROR
         }
 
         if (name.isNullOrEmpty()) {
-            nameError.value = ERR_EMPTY_FIELD
+            _nameError.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            nameError.value = NO_ERROR
+            _nameError.value = NO_ERROR
         }
         return isValid
     }

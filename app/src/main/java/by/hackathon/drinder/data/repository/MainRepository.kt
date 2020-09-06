@@ -53,17 +53,22 @@ class MainRepository @Inject constructor(
     }
 
     override suspend fun postUserDetail(
-        login: String,
-        password: String,
         gender: String,
         age: Int,
         alcohol: String,
         userName: String
     ): Boolean {
         return withContext(Dispatchers.IO) {
-            apiImplementation.postUserDetail(login, password, gender, age, alcohol, userName)
+            userManager.loginInfo?.let {
+                apiImplementation.postUserDetail(it.login, it.pass, gender, age, alcohol, userName)
+                    .also {
+                        userManager.userInfo = UserInfo(alcohol, gender, age, userName)
+                    }
+            } ?: false
         }
     }
+
+    override fun getSavedUserDetails() = userManager.userInfo
 
     override suspend fun findDrinkers(id: String): List<LocationInfo> {
         return withContext(Dispatchers.IO) {

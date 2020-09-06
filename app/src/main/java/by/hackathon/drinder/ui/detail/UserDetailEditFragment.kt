@@ -44,28 +44,28 @@ class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            nameState.observe(viewLifecycleOwner) {
+            nameData.observe(viewLifecycleOwner) {
                 tl_name.editText?.setText(it)
             }
-            ageState.observe(viewLifecycleOwner) {
+            ageData.observe(viewLifecycleOwner) {
                 tl_age.editText?.setText(it.toString())
             }
-            genderState.observe(viewLifecycleOwner) {
+            genderData.observe(viewLifecycleOwner) {
                 tl_gender.editText?.setText(it)
             }
-            alcoholState.observe(viewLifecycleOwner) {
+            alcoholData.observe(viewLifecycleOwner) {
                 tl_alcohol.editText?.setText(it)
             }
-            nameErrorState.observe(viewLifecycleOwner) { code ->
+            nameError.observe(viewLifecycleOwner) { code ->
                 setEditTextError(tl_name, code)
             }
-            ageErrorState.observe(viewLifecycleOwner) { code ->
+            ageError.observe(viewLifecycleOwner) { code ->
                 setEditTextError(tl_age, code)
             }
-            alcoholErrorState.observe(viewLifecycleOwner) { code ->
+            alcoholError.observe(viewLifecycleOwner) { code ->
                 setEditTextError(tl_alcohol, code)
             }
-            connectionErrorState.observe(viewLifecycleOwner) { isError ->
+            connectionError.observe(viewLifecycleOwner) { isError ->
                 if (isError)
                     Toast.makeText(
                         context,
@@ -73,7 +73,7 @@ class UserDetailEditFragment : Fragment(R.layout.fragment_user_detail_edit) {
                         Toast.LENGTH_SHORT
                     ).show()
             }
-            saveNavigationPermissionState.observe(viewLifecycleOwner) { isGranted ->
+            saveNavigationPermission.observe(viewLifecycleOwner) { isGranted ->
                 if (isGranted) navController.navigate(R.id.action_userDetailEditFragment_to_mapFragment)
             }
         }
