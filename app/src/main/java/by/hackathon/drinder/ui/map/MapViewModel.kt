@@ -3,6 +3,7 @@ package by.hackathon.drinder.ui.map
 import android.content.Context
 import android.location.Location
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import by.hackathon.drinder.R
 import by.hackathon.drinder.UserManager
@@ -53,10 +54,15 @@ class MapViewModel @Inject constructor(
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        val mapStyle =
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+                R.raw.style_json_n
+            else
+                R.raw.style_json
         googleMap.setMapStyle(
             MapStyleOptions.loadRawResourceStyle(
                 appContext,
-                R.raw.style_json
+                mapStyle
             )
         )
 
