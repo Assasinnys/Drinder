@@ -14,7 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class DefaultThemeTest {
+class LoginDataTest {
     lateinit var preferencesStorage: Storage
     lateinit var userManager: UserManager
     lateinit var appContext: Context

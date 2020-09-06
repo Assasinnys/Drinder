@@ -20,7 +20,7 @@ class ApiImplementation @Inject constructor() {
 
     suspend fun findDrinkers(id: String): List<LocationInfo> {
         val response = service.findDrinkers(id)
-        return if (response.isSuccessful) response.body()!! else emptyList<LocationInfo>()
+        return if (response.isSuccessful) response.body()!! else emptyList()
     }
 
     suspend fun sendLocation(id: String, lat: Double, lon: Double): Boolean {
