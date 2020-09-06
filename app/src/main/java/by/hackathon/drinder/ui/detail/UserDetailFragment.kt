@@ -56,19 +56,19 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            nameState.observe(viewLifecycleOwner) {
+            nameData.observe(viewLifecycleOwner) {
                 tv_name.text = it
             }
-            ageState.observe(viewLifecycleOwner) {
+            ageData.observe(viewLifecycleOwner) {
                 tv_age.text = it.toString()
             }
-            genderState.observe(viewLifecycleOwner) {
+            genderData.observe(viewLifecycleOwner) {
                 tv_gender.text = it
             }
-            alcoholState.observe(viewLifecycleOwner) {
+            alcoholData.observe(viewLifecycleOwner) {
                 tv_alcohol.text = it
             }
-            connectionErrorState.observe(viewLifecycleOwner) { isError ->
+            connectionError.observe(viewLifecycleOwner) { isError ->
                 if (isError)
                     Toast.makeText(
                         context,
@@ -76,7 +76,7 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail_show) {
                         Toast.LENGTH_LONG
                     ).show()
             }
-            isUserDifferent.observe(viewLifecycleOwner) { isDifferent ->
+            isEditDisabled.observe(viewLifecycleOwner) { isDifferent ->
                 if (isDifferent) {
                     setHasOptionsMenu(false)
                 } else {

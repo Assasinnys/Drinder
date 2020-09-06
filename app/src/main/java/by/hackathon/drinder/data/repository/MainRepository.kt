@@ -52,6 +52,12 @@ class MainRepository @Inject constructor(
         }
     }
 
+    override suspend fun getOwnUserDetail(): UserInfo? {
+        return userManager.loginInfo?.let {
+            getUserDetail(it.id)
+        }
+    }
+
     override suspend fun postUserDetail(
         gender: String,
         age: Int,
