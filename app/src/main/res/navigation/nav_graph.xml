@@ -11,9 +11,17 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            app:destination="@id/registrationFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
         <action
             android:id="@+id/action_loginFragment_to_mapFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
             app:destination="@id/mapFragment" />
     </fragment>
     <fragment
@@ -24,6 +32,10 @@
         <action
             android:id="@+id/action_registrationFragment_to_userDetailEditFragment"
             app:destination="@id/userDetailEditFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
             app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
@@ -33,6 +45,10 @@
         tools:layout="@layout/fragment_user_detail_edit">
         <action
             android:id="@+id/action_userDetailEditFragment_to_mapFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
             app:destination="@id/mapFragment"
             app:popUpTo="@id/loginFragment" />
     </fragment>
@@ -43,6 +59,10 @@
         tools:layout="@layout/fragment_user_detail_show">
         <action
             android:id="@+id/action_userDetailFragment_to_userDetailEditFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
             app:destination="@id/userDetailEditFragment" />
     </fragment>
     <fragment
@@ -52,6 +72,10 @@
         tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_mapFragment_to_userDetailFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
             app:destination="@id/userDetailFragment" />
     </fragment>
 </navigation>
