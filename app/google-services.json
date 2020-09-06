@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "593445881966",
+    "firebase_url": "https://drinder2-6c756.firebaseio.com",
+    "project_id": "drinder2-6c756",
+    "storage_bucket": "drinder2-6c756.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593445881966:android:fe57aa7d8d0bea29b47e7f",
+        "android_client_info": {
+          "package_name": "by.hackathon.drinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593445881966-ujj5g78hp81gcl784e0pkdmvs00ev05g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdfutqGqb2NmMK7PD6-bfB1L51mg7Df3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593445881966-ujj5g78hp81gcl784e0pkdmvs00ev05g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
