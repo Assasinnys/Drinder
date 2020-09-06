@@ -9,23 +9,24 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("MemberVisibilityCanBePrivate")
 @Singleton
-class Repository @Inject constructor() : LoginRepository, RegistrationRepository, UserDetailRepository, MapRepository {
+class Repository @Inject constructor(val apiImplementation: ApiImplementation) : LoginRepository, RegistrationRepository, UserDetailRepository, MapRepository {
     override suspend fun login(login: String, pass: String): LoginInfo? {
         return withContext(Dispatchers.IO) {
-            ApiImplementation.login(login, pass)
+            apiImplementation.login(login, pass)
         }
     }
 
     override suspend fun register(login: String, password: String): LoginInfo? {
         return withContext(Dispatchers.IO) {
-            ApiImplementation.register(login, password)
+            apiImplementation.register(login, password)
         }
     }
 
     override suspend fun getUserDetail(id: String): UserInfo? {
         return withContext(Dispatchers.IO) {
-            ApiImplementation.getUserDetail(id)
+            apiImplementation.getUserDetail(id)
         }
     }
 
@@ -38,19 +39,19 @@ class Repository @Inject constructor() : LoginRepository, RegistrationRepository
         userName: String
     ): Boolean {
         return withContext(Dispatchers.IO) {
-            ApiImplementation.postUserDetail(login, password, gender, age, alcohol, userName)
+            apiImplementation.postUserDetail(login, password, gender, age, alcohol, userName)
         }
     }
 
     override suspend fun findDrinkers(id: String): List<LocationInfo> {
         return withContext(Dispatchers.IO) {
-            ApiImplementation.findDrinkers(id)
+            apiImplementation.findDrinkers(id)
         }
     }
 
     override suspend fun sendLocation(id: String, lat: Double, lon: Double): Boolean {
         return withContext(Dispatchers.IO) {
-            ApiImplementation.sendLocation(id, lat, lon)
+            apiImplementation.sendLocation(id, lat, lon)
         }
     }
 }

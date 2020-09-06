@@ -44,13 +44,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            loginErrorFieldState.observe(viewLifecycleOwner) {code ->
+            loginErrorField.observe(viewLifecycleOwner) { code ->
                 setEditTextError(tl_login, code)
             }
-            passErrorFieldState.observe(viewLifecycleOwner) {code ->
+            passErrorField.observe(viewLifecycleOwner) { code ->
                 setEditTextError(tl_password, code)
             }
-            loginNavigationPermissionState.observe(viewLifecycleOwner) { isGranted ->
+            loginNavigationPermission.observe(viewLifecycleOwner) { isGranted ->
                 if (isGranted) navController.navigate(R.id.action_loginFragment_to_mapFragment)
             }
             login.observe(viewLifecycleOwner) {

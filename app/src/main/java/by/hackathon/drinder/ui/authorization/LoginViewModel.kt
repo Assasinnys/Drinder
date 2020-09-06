@@ -19,15 +19,15 @@ class LoginViewModel @Inject constructor(
     val repository: LoginRepository
 ) : ViewModel(), DefaultLifecycleObserver {
 
-    private val loginNavigationPermission = MutableLiveData(false)
-    private val loginErrorField = MutableLiveData<Int>(NO_ERROR)
-    private val passErrorField = MutableLiveData<Int>(NO_ERROR)
+    private val _loginNavigationPermission = MutableLiveData(false)
+    private val _loginErrorField = MutableLiveData<Int>(NO_ERROR)
+    private val _passErrorField = MutableLiveData<Int>(NO_ERROR)
     private val _login = MutableLiveData<String>()
     private val _pass = MutableLiveData<String>()
 
-    val loginNavigationPermissionState: LiveData<Boolean> get() = loginNavigationPermission
-    val loginErrorFieldState: LiveData<Int> get() = loginErrorField
-    val passErrorFieldState: LiveData<Int> get() = passErrorField
+    val loginNavigationPermission: LiveData<Boolean> get() = _loginNavigationPermission
+    val loginErrorField: LiveData<Int> get() = _loginErrorField
+    val passErrorField: LiveData<Int> get() = _passErrorField
     val login: LiveData<String> get() = _login
     val pass: LiveData<String> get() = _pass
 
@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
             _pass.value = previousLoginData.second
             userManager.logout()
         }
-        loginNavigationPermission.value = false
+        _loginNavigationPermission.value = false
     }
 
     fun notifyLoginRequest(login: String?, pass: String?) {
@@ -49,9 +49,9 @@ class LoginViewModel @Inject constructor(
             if (loginInfo != null) {
                 userManager.loginInfo = loginInfo
                 userManager.saveLoginData()
-                loginNavigationPermission.value = true
+                _loginNavigationPermission.value = true
             } else {
-                loginErrorField.value = ERR_USER_NOT_EXIST
+                _loginErrorField.value = ERR_USER_NOT_EXIST
             }
         }
     }
@@ -60,17 +60,17 @@ class LoginViewModel @Inject constructor(
         var isValid = true
 
         if (login.isNullOrEmpty()) {
-            loginErrorField.value = ERR_EMPTY_FIELD
+            _loginErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            loginErrorField.value = NO_ERROR
+            _loginErrorField.value = NO_ERROR
         }
 
         if (pass.isNullOrEmpty()) {
-            passErrorField.value = ERR_EMPTY_FIELD
+            _passErrorField.value = ERR_EMPTY_FIELD
             isValid = false
         } else {
-            passErrorField.value = NO_ERROR
+            _passErrorField.value = NO_ERROR
         }
 
         return isValid
