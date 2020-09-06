@@ -1,7 +1,10 @@
 package by.hackathon.drinder.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import by.hackathon.drinder.R
@@ -22,6 +25,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             replace(R.id.f_container, LoginFragment())
             commit()
         }*/
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_change_theme, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.change_theme) {
+            if (AppCompatDelegate.MODE_NIGHT_YES != AppCompatDelegate.getDefaultNightMode()) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            true
+        } else super.onOptionsItemSelected(item)
     }
 
     /*fun goToDetailShowFragment() {
