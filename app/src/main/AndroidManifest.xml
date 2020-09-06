@@ -39,12 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MapsActivity"
-            android:label="@string/title_map_screen"/>
-
-        <activity android:name=".ui.MyProfileActivity"
-            android:label="@string/title_profile_screen"/>
     </application>
 
 </manifest>
