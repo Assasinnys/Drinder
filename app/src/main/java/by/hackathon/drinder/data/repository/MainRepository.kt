@@ -58,6 +58,10 @@ class MainRepository @Inject constructor(
         }
     }
 
+    override fun getOwnId(): String? {
+        return userManager.loginInfo?.id
+    }
+
     override suspend fun postUserDetail(
         gender: String,
         age: Int,
@@ -76,15 +80,19 @@ class MainRepository @Inject constructor(
 
     override fun getSavedUserDetails() = userManager.userInfo
 
-    override suspend fun findDrinkers(id: String): List<LocationInfo> {
+    override suspend fun findDrinkers(): List<LocationInfo> {
         return withContext(Dispatchers.IO) {
-            apiImplementation.findDrinkers(id)
+            userManager.loginInfo?.let {
+                apiImplementation.findDrinkers(it.id)
+            } ?: emptyList()
         }
     }
 
-    override suspend fun sendLocation(id: String, lat: Double, lon: Double): Boolean {
+    override suspend fun sendLocation(lat: Double, lon: Double): Boolean {
         return withContext(Dispatchers.IO) {
-            apiImplementation.sendLocation(id, lat, lon)
+            userManager.loginInfo?.let {
+                apiImplementation.sendLocation(it.id, lat, lon)
+            } ?: false
         }
     }
 }

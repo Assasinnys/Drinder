@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import by.hackathon.drinder.R
-import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.repository.MapRepository
 import by.hackathon.drinder.util.DEFAULT_USER
@@ -25,7 +24,7 @@ import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
 class MapViewModel @Inject constructor(
-    val userManager: UserManager,
+//    val userManager: UserManager,
     val repository: MapRepository,
     val appContext: Context
 ) : ViewModel(), DefaultLifecycleObserver,
@@ -68,16 +67,15 @@ class MapViewModel @Inject constructor(
 
         updateLocationUI()
         viewModelScope.launch {
-            userManager.loginInfo?.let {
-                val markers = repository.findDrinkers(it.id)
-                showDrinkers(markers, it.id)
-            }
+
+            val markers = repository.findDrinkers()
+            showDrinkers(markers, repository.getOwnId())
         }
         getDeviceLocation()
         if (mLastKnownLocation != null) mMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLng()))
     }
 
-    private fun showDrinkers(markers: List<LocationInfo>, myId: String) {
+    private fun showDrinkers(markers: List<LocationInfo>, myId: String?) {
         markers.forEach { marker ->
             if (marker.id != myId) {
                 val m = mMap.addMarker(
@@ -138,12 +136,8 @@ class MapViewModel @Inject constructor(
 
     fun notifyLocationSendRequest() {
         mLastKnownLocation?.let { location ->
-            userManager.loginInfo?.let {
-                viewModelScope.launch {
-                    val isSuccessful =
-                        repository.sendLocation(it.id, location.latitude, location.longitude)
-                    Log.d("ASD", "$isSuccessful")
-                }
+            viewModelScope.launch {
+                repository.sendLocation(location.latitude, location.longitude)
             }
         }
     }
