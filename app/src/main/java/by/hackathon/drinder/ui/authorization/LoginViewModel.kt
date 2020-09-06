@@ -1,7 +1,6 @@
 package by.hackathon.drinder.ui.authorization
 
 import androidx.lifecycle.*
-import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.data.repository.LoginRepository
 import by.hackathon.drinder.util.ERR_EMPTY_FIELD
 import by.hackathon.drinder.util.ERR_USER_NOT_EXIST
@@ -15,7 +14,6 @@ import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
 class LoginViewModel @Inject constructor(
-    val userManager: UserManager,
     val repository: LoginRepository
 ) : ViewModel(), DefaultLifecycleObserver {
 
@@ -32,12 +30,10 @@ class LoginViewModel @Inject constructor(
     val pass: LiveData<String> get() = _pass
 
     override fun onStart(owner: LifecycleOwner) {
-        userManager.apply {
-            val previousLoginData = userManager.getPreviousLoginData()
-            _login.value = previousLoginData.first
-            _pass.value = previousLoginData.second
-            userManager.logout()
-        }
+        val previousLoginData = repository.getPreviousLoginData()
+        _login.value = previousLoginData.first
+        _pass.value = previousLoginData.second
+        repository.logoutUser()
         _loginNavigationPermission.value = false
     }
 
@@ -45,9 +41,8 @@ class LoginViewModel @Inject constructor(
         if (!isValidFields(login, pass)) return
 
         viewModelScope.launch {
-            val loginInfo = repository.login(login!!, pass!!)
-            if (loginInfo != null) {
-                userManager.loginInfo = loginInfo
+            val isSuccessful = repository.login(login!!, pass!!)
+            if (isSuccessful) {
                 _loginNavigationPermission.value = true
             } else {
                 _loginErrorField.value = ERR_USER_NOT_EXIST

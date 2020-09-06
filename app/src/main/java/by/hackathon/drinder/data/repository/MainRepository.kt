@@ -1,5 +1,6 @@
 package by.hackathon.drinder.data.repository
 
+import by.hackathon.drinder.UserManager
 import by.hackathon.drinder.api.ApiImplementation
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.LoginInfo
@@ -12,19 +13,36 @@ import javax.inject.Singleton
 
 @Suppress("MemberVisibilityCanBePrivate")
 @Singleton
-class Repository @Inject constructor(val apiImplementation: ApiImplementation, val storage: Storage) : LoginRepository,
+class MainRepository @Inject constructor(
+    val apiImplementation: ApiImplementation,
+    val storage: Storage,
+    val userManager: UserManager
+) : LoginRepository,
     RegistrationRepository, UserDetailRepository, MapRepository {
 
-    override suspend fun login(login: String, pass: String): LoginInfo? {
-        storage.saveLoginData(login, pass)
+    override suspend fun login(login: String, pass: String): Boolean {
         return withContext(Dispatchers.IO) {
-            apiImplementation.login(login, pass)
+            saveCheckLoginInfo(apiImplementation.login(login, pass))
         }
     }
 
-    override suspend fun register(login: String, password: String): LoginInfo? {
+    override fun logoutUser() {
+        userManager.logout()
+    }
+
+    private fun saveCheckLoginInfo(loginInfo: LoginInfo?): Boolean {
+        return if (loginInfo != null) {
+            userManager.login(loginInfo)
+            storage.saveLoginData(loginInfo.login, loginInfo.pass)
+            true
+        } else false
+    }
+
+    override fun getPreviousLoginData() = storage.getPreviousLoginData()
+
+    override suspend fun register(login: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            apiImplementation.register(login, password)
+            saveCheckLoginInfo(apiImplementation.register(login, password))
         }
     }
 

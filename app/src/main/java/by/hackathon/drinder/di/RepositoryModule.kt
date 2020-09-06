@@ -1,5 +1,6 @@
 package by.hackathon.drinder.di
 
+import by.hackathon.drinder.data.SharedPreferenceStorage
 import by.hackathon.drinder.data.Storage
 import by.hackathon.drinder.data.repository.*
 import dagger.Binds
@@ -11,19 +12,19 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun getLoginRepository(repository: Repository): LoginRepository
+    fun getLoginRepository(mainRepository: MainRepository): LoginRepository
 
     @Binds
     @Singleton
-    fun getRegistrationRepository(repository: Repository): RegistrationRepository
+    fun getRegistrationRepository(mainRepository: MainRepository): RegistrationRepository
 
     @Binds
     @Singleton
-    fun getUserDetailRepository(repository: Repository): UserDetailRepository
+    fun getUserDetailRepository(mainRepository: MainRepository): UserDetailRepository
 
     @Binds
     @Singleton
-    fun getMapRepository(repository: Repository): MapRepository
+    fun getMapRepository(mainRepository: MainRepository): MapRepository
 
     @Binds
     @Singleton

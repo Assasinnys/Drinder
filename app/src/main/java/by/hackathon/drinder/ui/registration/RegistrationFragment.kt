@@ -41,13 +41,13 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private fun setupViewModelObservers() {
         viewModel.apply {
-            registerNavigationPermissionState.observe(viewLifecycleOwner) { isGranted ->
+            registerNavigationPermission.observe(viewLifecycleOwner) { isGranted ->
                 if (isGranted) navController.navigate(R.id.action_registrationFragment_to_userDetailEditFragment)
             }
-            loginErrorFieldState.observe(viewLifecycleOwner) { code ->
+            loginErrorField.observe(viewLifecycleOwner) { code ->
                 setEditTextError(tl_login, code)
             }
-            passErrorFieldState.observe(viewLifecycleOwner) { code ->
+            passErrorField.observe(viewLifecycleOwner) { code ->
                 setEditTextError(tl_password, code)
             }
         }

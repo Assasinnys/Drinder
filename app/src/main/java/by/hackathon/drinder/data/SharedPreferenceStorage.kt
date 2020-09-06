@@ -1,9 +1,9 @@
-package by.hackathon.drinder.data.repository
+package by.hackathon.drinder.data
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
-import by.hackathon.drinder.UserManager
-import by.hackathon.drinder.data.Storage
+import by.hackathon.drinder.util.LOGIN_KEY
+import by.hackathon.drinder.util.PASS_KEY
 import by.hackathon.drinder.util.PREF_NAME
 import by.hackathon.drinder.util.THEME
 import javax.inject.Inject
@@ -23,14 +23,14 @@ class SharedPreferenceStorage @Inject constructor(appContext: Context) : Storage
 
     override fun saveLoginData(login: String, pass: String) {
         prefs.edit().apply {
-            putString(UserManager.LOGIN_KEY, login)
-            putString(UserManager.PASS_KEY, pass)
+            putString(LOGIN_KEY, login)
+            putString(PASS_KEY, pass)
             apply()
         }
     }
 
     override fun getPreviousLoginData(): Pair<String, String> {
-        return prefs.getString(UserManager.LOGIN_KEY, "")!! to prefs.getString(
-            UserManager.PASS_KEY, "")!!
+        return prefs.getString(LOGIN_KEY, "")!! to prefs.getString(
+            PASS_KEY, "")!!
     }
 }
