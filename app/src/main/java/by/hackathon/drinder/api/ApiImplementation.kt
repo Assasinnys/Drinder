@@ -3,15 +3,17 @@ package by.hackathon.drinder.api
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.LoginInfo
 import by.hackathon.drinder.data.UserInfo
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object ApiImplementation {
-    private const val BASE_URL = "https://hackaton-web-server.herokuapp.com"
+@Singleton
+class ApiImplementation @Inject constructor() {
+    private val baseUrl = "https://hackaton-web-server.herokuapp.com"
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())
-        .baseUrl(BASE_URL)
+        .baseUrl(baseUrl)
         .build()
 
     private val service = retrofit.create(DrinderApi::class.java)
