@@ -9,3 +9,5 @@ const val ERR_AGE_ZERO = 5
 const val ERR_AGE_TOO_HIGH = 6
 const val USER_ID = "user_id"
 const val DEFAULT_USER = "-1"
+const val PREF_NAME = "drinkers"
+const val THEME = "theme"

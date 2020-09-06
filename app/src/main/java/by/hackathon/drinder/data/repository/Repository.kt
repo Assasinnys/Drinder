@@ -3,6 +3,7 @@ package by.hackathon.drinder.data.repository
 import by.hackathon.drinder.api.ApiImplementation
 import by.hackathon.drinder.data.LocationInfo
 import by.hackathon.drinder.data.LoginInfo
+import by.hackathon.drinder.data.Storage
 import by.hackathon.drinder.data.UserInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,8 +12,11 @@ import javax.inject.Singleton
 
 @Suppress("MemberVisibilityCanBePrivate")
 @Singleton
-class Repository @Inject constructor(val apiImplementation: ApiImplementation) : LoginRepository, RegistrationRepository, UserDetailRepository, MapRepository {
+class Repository @Inject constructor(val apiImplementation: ApiImplementation, val storage: Storage) : LoginRepository,
+    RegistrationRepository, UserDetailRepository, MapRepository {
+
     override suspend fun login(login: String, pass: String): LoginInfo? {
+        storage.saveLoginData(login, pass)
         return withContext(Dispatchers.IO) {
             apiImplementation.login(login, pass)
         }

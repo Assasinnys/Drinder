@@ -2,6 +2,7 @@ package by.hackathon.drinder.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import by.hackathon.drinder.ui.activity.MainViewModel
 import by.hackathon.drinder.ui.authorization.LoginViewModel
 import by.hackathon.drinder.ui.detail.UserDetailEditViewModel
 import by.hackathon.drinder.ui.detail.UserDetailViewModel
@@ -39,6 +40,11 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(UserDetailEditViewModel::class)
     fun userDetailEditViewModel(UserDetailEditViewModel: UserDetailEditViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    fun mainViewModel(mainViewModel: MainViewModel): ViewModel
 
     @Singleton
     @Binds

@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import by.hackathon.drinder.ui.MainActivity
+import by.hackathon.drinder.ui.activity.MainActivity
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -39,7 +39,8 @@ class LoginErrorTest {
     }
 
     @get:Rule
-    val activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
+    val activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule(
+        MainActivity::class.java)
 
     @Before
     fun initErrorText() {

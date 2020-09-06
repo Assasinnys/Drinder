@@ -1,5 +1,6 @@
 package by.hackathon.drinder.di
 
+import by.hackathon.drinder.data.Storage
 import by.hackathon.drinder.data.repository.*
 import dagger.Binds
 import dagger.Module
@@ -23,4 +24,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun getMapRepository(repository: Repository): MapRepository
+
+    @Binds
+    @Singleton
+    fun getStorage(storage: SharedPreferenceStorage): Storage
 }

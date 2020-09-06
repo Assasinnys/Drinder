@@ -1,6 +1,7 @@
 package by.hackathon.drinder.di
 
 import android.content.Context
+import by.hackathon.drinder.ui.activity.MainActivity
 import by.hackathon.drinder.ui.authorization.LoginFragment
 import by.hackathon.drinder.ui.detail.UserDetailEditFragment
 import by.hackathon.drinder.ui.detail.UserDetailFragment
@@ -24,4 +25,5 @@ interface AppComponent {
     fun inject(mapFragment: MapFragment)
     fun inject(userDetailFragment: UserDetailFragment)
     fun inject(userDetailEditFragment: UserDetailEditFragment)
+    fun inject(mainActivity: MainActivity)
 }

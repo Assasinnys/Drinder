@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(
 
     override fun onStart(owner: LifecycleOwner) {
         userManager.apply {
-            val previousLoginData = getPreviousLoginData()
+            val previousLoginData = userManager.getPreviousLoginData()
             _login.value = previousLoginData.first
             _pass.value = previousLoginData.second
             userManager.logout()
@@ -48,7 +48,6 @@ class LoginViewModel @Inject constructor(
             val loginInfo = repository.login(login!!, pass!!)
             if (loginInfo != null) {
                 userManager.loginInfo = loginInfo
-                userManager.saveLoginData()
                 _loginNavigationPermission.value = true
             } else {
                 _loginErrorField.value = ERR_USER_NOT_EXIST
