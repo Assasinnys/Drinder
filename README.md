@@ -3,4 +3,4 @@ Final app for RS School Android.
 Created by Dmitry (Assasinnys)
 
 -------
-Server repository: https://github.com/Assasinnys/HackatonWebServer
+Web server repository: https://github.com/Assasinnys/HackatonWebServer
